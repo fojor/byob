@@ -1,0 +1,46 @@
+@font-face {
+    font-family: "Raleway - Semi Bold";
+    src: url("../fonts/raleway/Raleway-SemiBold.ttf") format("opentype");
+}
+
+@font-face {
+    font-family: "Raleway - Regular";
+    src: url("../fonts/raleway/Raleway-Regular.ttf") format("opentype");
+}
+
+@font-face {
+    font-family: "Raleway - Medium";
+    src: url("../fonts/raleway/Raleway-Medium.ttf") format("opentype");
+}
+
+@font-face {
+    font-family: "Raleway - Regular italic";
+    src: url("../fonts/raleway/Raleway-Regular-Italic.ttf") format("opentype");
+}
+
+@font-face {
+    font-family: "Raleway - Black";
+    src: url("../fonts/raleway/Raleway-Black.ttf") format("opentype");
+}
+
+@font-face {
+    font-family: "Lora";
+    src: url("../fonts/lora/Lora-Regular.ttf") format("opentype");
+}
+
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../fonts/OpenSans-Regular.ttf") format("opentype");
+}
+
+
+@font-face {
+    font-family: "Montserrat - Black";
+    src: url("../fonts/Montserrat-Black.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Signerica Fat";
+    src: url("../fonts/Signerica_Fat.ttf") format("opentype");
+}

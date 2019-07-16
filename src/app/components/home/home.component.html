@@ -1,0 +1,617 @@
+<div>
+  <div class="container-fluid top_header_links">
+    <div class="container">
+      <div class="row">
+        <div class="header_logo col-md-2 col-sm-12">
+          <div>BYOB</div> <span>Be Your Own Boss</span>
+        </div>
+        <div class="header_search col-md-4 col-sm-12">
+          <form [formGroup]="searchForm" (ngSubmit)="searchIntrep()">
+            <input type="search" formControlName="search" placeholder="Find Entrepreneur">
+            <button type="submit"></button>
+          </form>
+        </div>
+        <div class="col-md-6 top_header_connect">
+          <ul>
+            <li>
+              <a href="#">Browse</a>
+            </li>
+            <li>
+              <a href="/chat-room" routerLink="/chat-room"> Chat room</a>
+            </li>
+            <li>
+              <a href="#"> My Connection</a>
+            </li>
+            <li>
+              <a href="#">Notifications <span class="counter">2</span></a>
+            </li>
+            <li>
+              <a class="nav-drop" href="#">Messages</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <nav class="navbar navbar-expand-lg  navbar-light ">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav header_navbar ">
+              <li class="nav-item active">
+                <a class="nav-link " href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Entrepreneurs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Investors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">VIDEO</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Testimonials</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container-fluid banner_section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9 col-sm-12 slick-carousel">
+            <div class="slide-1">
+              <h1 class="title-help"> We Help</h1>
+              <h2 class="title-growing">Growing Business</h2>
+              <p class="about-grow-text">Proin gravida nibh vel velit auctor aliquetjhjh. sollicitudin, lorem
+                quis bibev nbnncgcg ndum auctor, nisi elit consequat ipsum nec sagittis sem nibh id elit.
+                Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
+              <a routerLink="/signup" class="get-start-button">Get started</a>
+            </div>
+            <div class="slide-2">
+              <h1 class="title-help"> We Help-2</h1>
+              <h2 class="title-growing">Growing Business</h2>
+              <p class="about-grow-text">Proin gravida nibh vel velit auctor aliquetjhjh. sollicitudin, lorem
+                quis bibev nbnncgcg ndum auctor, nisi elit consequat ipsum nec sagittis sem nibh id elit.
+                Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
+              <a routerLink="/signup" class="get-start-button">Get started</a>
+            </div>
+            <div class="slide-3">
+              <h1 class="title-help"> We Help-3</h1>
+              <h2 class="title-growing">Growing Business</h2>
+              <p class="about-grow-text">Proin gravida nibh vel velit auctor aliquetjhjh. sollicitudin, lorem
+                quis bibev nbnncgcg ndum auctor, nisi elit consequat ipsum nec sagittis sem nibh id elit.
+                Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
+              <a routerLink="/signup" class="get-start-button">Get started</a>
+            </div>
+            <div class="slide-4">
+              <h1 class="title-help"> We Help-4</h1>
+              <h2 class="title-growing">Growing Business</h2>
+              <p class="about-grow-text">Proin gravida nibh vel velit auctor aliquetjhjh. sollicitudin, lorem
+                quis bibev nbnncgcg ndum auctor, nisi elit consequat ipsum nec sagittis sem nibh id elit.
+                Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.</p>
+              <a routerLink="/signup" class="get-start-button">Get started</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="container main-information">
+        <div class="row">
+          <h3 class="title-build">WE BUILD UP YOUR BUSINESS</h3>
+          <p class="subtitle-build"> Many people have dreamed it at one time or another striking out on their
+            own
+            and starting their own business.</p>
+          <p class="build-text">Sed non mauris vitae erat consequat Ipsum. Proin gravida nibh vel velit auctor
+            aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis
+            sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan
+            ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat
+            consequat auctor eu in elit.</p>
+          <p class="build-text">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+            inceptos
+            himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed
+            non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed
+            fermentum feugiat,</p>
+          <p class="after-build-text">Find out how we can help you</p>
+        </div>
+        <div class="row">
+          <ul class="business_links">
+            <li>
+              <img src="assets/img/1business.jpg" alt="1">
+              <a href="#">Business</a>
+            </li>
+            <li>
+              <img src="assets/img/2business.jpg" alt="2">
+              <a href="#">Exchange Information</a>
+            </li>
+            <li>
+              <img src="assets/img/3business.jpg" alt="3">
+              <a href="#">Advertisement </a>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <h3 class="title-build">Meet our Be your own boss Team</h3>
+          <p class="subtitle-build">Aenean sollicitudin, lorem quis bibendum auctor, nisi elit <br> consequat
+            ipsum, nec sagittis sem</p>
+          <p class="build-text">Sed non mauris vitae erat consequat Ipsum. Proin gravida nibh vel velit auctor
+            aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis
+            sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. </p>
+        </div>
+        <div class="row">
+          <ul class="team_links">
+            <li>
+              <a href="#" class="image-link"><img class="s" src="assets/img/1man.png" alt="1"></a>
+              <div class="team-user-name">Warren Buffett</div>
+              <div class="team-about-user">Mauris vitae erat co velit auctor aliquet</div>
+              <a href="#" class="about-user-button">View Detail</a>
+            </li>
+            <li>
+              <a href="#" class="image-link"><img src="assets/img/2man.png" alt="1"></a>
+              <div class="team-user-name">Benjamin Graham</div>
+              <div class="team-about-user">Mauris vitae erat co velit auctor aliquet</div>
+              <a href="#" class="about-user-button">View Detail</a>
+            </li>
+            <li>
+              <a href="#" class="image-link"><img src="assets/img/3man.png" alt="1"></a>
+              <div class="team-user-name">Scott Trump</div>
+              <div class="team-about-user">Mauris vitae erat co velit auctor aliquet</div>
+              <a href="#" class="about-user-button">View Detail</a>
+            </li>
+            <li>
+              <a href="#" class="image-link"><img src="assets/img/4man.png" alt="1"></a>
+              <div class="team-user-name">Alex Eastwood</div>
+              <div class="team-about-user">Mauris vitae erat co velit auctor aliquet</div>
+              <a href="#" class="about-user-button">View Detail</a>
+            </li>
+          </ul>
+          <a href="#" class="view_more_team_btn">View more byob team</a>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid welcome_section">
+      <div class="container">
+        <div class="row">
+          <p class="welcome-title">
+            Welcome to Click meet where you can get
+            the basic information on someone profile
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid people-links">
+      <ul>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman2.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/man.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link"><img src="assets/img/woman.png" alt="image">
+            <div class="about">
+              <div class="about-me-name">Clint Eastwood</div>
+              <div class="about-profession">entrepreneur</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <div class="row col-md-12 greyline"></div>
+    </div>
+    <div class="container-fluid">
+      <div class="container">
+        <div class="row">
+          <h3 class="title-build">Our Testimonials</h3>
+        </div>
+        <div class="row testimonials">
+          <div class="col-md-4">
+            <p class="testimonial-column">Sed non mauris vitae erat consequat Ipsum. Proin gravida nibh vel
+              velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat
+              ipsum.</p>
+            <p class="testimonial-author">John Mark Alex</p>
+            <p class="testimonial-subtitle">Managing Director</p>
+          </div>
+          <div class="col-md-4">
+            <p class="testimonial-column">Sed non mauris vitae erat consequat Ipsum. Proin gravida nibh vel
+              velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat
+              ipsum.</p>
+            <p class="testimonial-author">John Mark Alex</p>
+            <p class="testimonial-subtitle">Managing Director</p>
+          </div>
+          <div class="col-md-4">
+            <p class="testimonial-column">Sed non mauris vitae erat consequat Ipsum. Proin gravida nibh vel
+              velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat
+              ipsum.</p>
+            <p class="testimonial-author">John Mark Alex</p>
+            <p class="testimonial-subtitle">Managing Director</p>
+          </div>
+        </div>
+        <div class="row">
+          <h3 class="title-build">CEO director Massage</h3>
+        </div>
+        <div class="row">
+          <div class="col-md-5 boss-photo">
+            <img src="assets/img/bigboss.png" alt="boss">
+          </div>
+          <div class="col-md-7">
+            <p class="title-boss-speach">Dear Clients,</p>
+            <p class="boss_speach"> Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum,
+              nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris.
+              Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odioed mauris vitae
+              erat consequat.
+              auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, mauris
+              vitae erat consequat per inceptos himenaeos.</p>
+            <p class="boos-signature-top"><span> Matthew </span> William Torres</p>
+            <p class="boos-signature-bottom">Matthew William Torres</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid footer-top-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="footer_top_title">
+              Stay connected with our Journey. </p>
+            <p class="footer_bot_title"> Subscribe for our Newsletter</p>
+            <div class="mail-form">
+              <form [formGroup]="subscribeForm" (ngSubmit)="onSubscribe()">
+                <input type="email" formControlName="email" placeholder="Enter your Email">
+                <button type="submit">Sub</button>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-6 ">
+            <div class="app-links">
+              <a href="#"><img src="assets/img/button_download_android.png" alt="android"></a>
+              <a href="#"><img src="assets/img/appstore.png" alt="app"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <footer> -->
+    <div class="container-fluid footer-bottom-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9">
+            <p class="bottom-title-alpha">Connecting members to each other</p>
+            <ul class="alphabet">
+              <li class="flip"><a href="#">A</a></li>
+              <li class="flip"><a href="#">B</a></li>
+              <li class="flip"><a href="#">C</a></li>
+              <li class="flip"><a href="#">D</a></li>
+              <li class="flip"><a href="#">E</a></li>
+              <li class="flip"><a href="#">F</a></li>
+              <li class="flip"><a href="#">G</a></li>
+              <li class="flip"><a href="#">H</a></li>
+              <li class="flip"><a href="#">I</a></li>
+              <li class="flip"><a href="#">J</a></li>
+              <li class="flip"><a href="#">K</a></li>
+              <li class="flip"><a href="#">L</a></li>
+              <li class="flip"><a href="#">M</a></li>
+              <li class="flip"><a href="#">N</a></li>
+              <li class="flip"><a href="#">O</a></li>
+              <li class="flip"><a href="#">P</a></li>
+              <li class="flip"><a href="#">Q</a></li>
+              <li class="flip"><a href="#">R</a></li>
+              <li class="flip"><a href="#">S</a></li>
+              <li class="flip"><a href="#">T</a></li>
+              <li class="flip"><a href="#">U</a></li>
+              <li class="flip"><a href="#">V</a></li>
+              <li class="flip"><a href="#">W</a></li>
+              <li class="flip"><a href="#">X</a></li>
+              <li class="flip"><a href="#">Y</a></li>
+              <li class="flip"><a href="#">Z</a></li>
+              <li class="flip"><a href="#">More</a></li>
+            </ul>
+            <p class="bottom-subbtitle-alpha">
+              Browse by country
+            </p>
+          </div>
+          <div class="col-md-3">
+            <a href="#" class="button-member"><img src="assets/img/button-bot.png" alt="a"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid footer-nav-wrapper">
+      <div class="container">
+        <div class="row">
+          <ul class="footer-nav col-md-12">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#"> Sign Up </a></li>
+            <li><a href="#">Developers Blog</a></li>
+            <li><a href="#">Groups</a></li>
+            <li><a href="#">Jobs</a></li>
+            <li><a href="#">Learning</a></li>
+            <li><a href="#"> Top Jobs</a></li>
+            <li><a href="#">Team</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">CAREERS</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid footer-bottom-section">
+      <div class="container">
+        <div class="row">
+          <ul class="copyright-list col-md-7">
+            <li>
+              © Copyright 2017 - Byob - All Rights Reserved
+            </li>
+            <li>
+              <a href="#">Site Map </a>
+            </li>
+            <li>
+              <a href="#">Privacy Policy </a>
+            </li>
+            <li>
+              <a href="#"> Disclaimer User </a>
+            </li>
+            <li>
+              <a href="#"> Guest Controls</a>
+            </li>
+            <li>
+              <a href="#"> Agreement </a>
+            </li>
+            <li>
+              <a href="#"> Community Guidelines </a>
+            </li>
+          </ul>
+          <div class="header_logo col-md-2 offset-md-3 footer-logo">
+            <div>BYOB</div> <span>Be Your Own Boss</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- </footer> -->
+
+  </div>
+</div>

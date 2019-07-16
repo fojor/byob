@@ -1,0 +1,52 @@
+.not-active-chat {
+  visibility: hidden;
+}
+
+.chat-item {
+  cursor: pointer;
+  &:hover {
+    background: rgb(205, 234, 252);
+  }
+}
+
+.current-chat {
+  cursor: pointer;
+  &:hover {
+    background: rgb(205, 234, 252);
+  }
+}
+
+.search {
+  background: transparent;
+  border: none;
+  outline: none;
+  margin-top: 1rem;
+}
+
+
+.typing_field {
+  textarea,input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 35rem;
+    resize: none;
+  }
+}
+
+.icon__add-participant {
+  cursor: pointer;
+}
+
+.icon__add-file {
+  cursor: pointer;
+}
+
+.message {
+  display: flow-root;
+  margin: 1.5rem 0;
+}
+
+.icon__add-mode-available {
+  cursor: pointer;
+}

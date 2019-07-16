@@ -1,0 +1,26 @@
+.social-login-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    align-content: stretch;
+}
+
+.btn {
+    padding: 10px 10px 10px 50px;
+    font-size: 14px;
+    font-size: 14px;
+    border-radius: 2px;
+}
+  
+.btn-social:first-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    width: 205px;
+    top: 3px;
+}
+
+.btn-google-plus,
+.btn-facebook {
+    color: #fff!important;
+}

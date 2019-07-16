@@ -1,0 +1,22 @@
+<div *ngIf="isImage();else fileLink;">
+  <div class="colon"><img class="colon" src='img/colon.png' alt=""></div>
+  <div class="picture_file">
+    <a [href]="link" download>
+      <img class="image_file" [src]="preview" alt="image">
+      <div class="file__size">
+        {{metadata.size}} bytes
+      </div>
+    </a>
+  </div>
+</div>
+<ng-template #fileLink class="reply">
+  <div class="colon"><img class="colon" src='img/colon.png' alt=""></div>
+  <div class="picture_file">
+    <a [href]="link" download>
+      {{metadata.name}}
+      <div class="file__size">
+        {{metadata.size}} bytes
+      </div>
+    </a>
+  </div>
+</ng-template>

@@ -1,0 +1,433 @@
+.content {
+  margin-top: 30px;
+  margin-bottom: 60px;
+}
+
+/* стили для шапки рабочей области */
+.type_header {
+  border: 1px solid #eff0f3;
+  height: 100px;
+}
+
+h4 {
+  font-size: 17px;
+  font-family: "Raleway";
+  color: rgb(5, 28, 44);
+  font-weight: bold;
+  line-height: 1.412;
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+
+.timing {
+  font-size: 12px;
+  font-family: "OpenSans";
+  color: rgb(158, 158, 158);
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+#status_circle {
+  vertical-align: unset;
+}
+
+table {
+  margin-top: 30px;
+}
+
+.table_h1 {
+  border-right: 1px solid #e8e8e9;
+  font-size: 14px;
+  font-family: "Raleway";
+  color: rgb(128, 128, 128);
+  line-height: 1.714;
+  width: 150px;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.table_h2 {
+  border-right: 1px solid #e8e8e9;
+  font-size: 14px;
+  font-family: "Raleway";
+  color: rgb(128, 128, 128);
+  line-height: 1.714;
+  width: 100px;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.table_h3 {
+  padding-top: 5px;
+}
+
+.table_img {
+  margin-left: 20px;
+}
+
+/* стили для рабочей области */
+.working_field {
+  background-color: #f7f8fb;
+  padding-top: 30px;
+  border: 1px solid #dbdbdb;
+  max-height: 86vh;
+  overflow: auto;
+}
+
+.message_picture {
+  float: left;
+}
+
+.reply_picture {
+  float: right;
+}
+
+.time_stamp {
+  margin-left: 60px;
+}
+
+.reply_time_stamp {
+  text-align: right;
+}
+
+#status_available {
+  vertical-align: sub;
+}
+
+.message_field {
+  background-color: #fff;
+  margin-left: 60px;
+}
+
+.message1 {
+  width: 400px;
+}
+
+.message2 {
+  width: 540px;
+}
+
+.message3 {
+  width: 470px;
+}
+
+.reply {
+  display: flow-root;
+  margin: 1.5rem 0;
+}
+
+.reply1 {
+  width: 360px;
+  margin-left: 295px;
+}
+
+.reply2 {
+  width: 490px;
+  margin-left: 195px;
+}
+
+.reply_field {
+  background-color: #cdeafc;
+}
+
+.message_text {
+  font-size: 16px;
+  font-family: "Raleway";
+  color: rgb(7, 7, 7);
+  line-height: 1.125;
+  text-align: center;
+  padding: 1rem 0.5rem;
+}
+
+.message_image {
+  border-radius: 30px;
+  max-height: 3.5rem;
+}
+
+.reply_image {
+  //max-height: 5rem;
+  border-radius: 30px;
+  max-height: 3.5rem;
+}
+
+.colon {
+  float: left;
+}
+
+.image_file {
+  border-radius: 0 30px;
+}
+
+.row_typing {
+  margin: 0 10px;
+}
+
+.typing {
+  margin-top: 35px;
+}
+
+.emoticon {
+  margin-top: 35px;
+}
+
+.emoticon p {
+  text-align: right;
+}
+
+.col-typing {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.typing p {
+  font-size: 14px;
+  font-family: "Raleway";
+  color: rgb(120, 120, 120);
+  line-height: 1.714;
+}
+
+.emoticon p {
+  font-size: 14px;
+  font-family: "Raleway";
+  color: rgb(120, 120, 120);
+  line-height: 1.714;
+}
+
+.typing_field {
+  margin: 0 10px;
+  margin-bottom: 25px;
+  height: 90px;
+  background-color: #fff;
+}
+
+.typing_message {
+  padding-top: 35px;;
+}
+
+.typing_icons {
+  padding-top: 35px;
+  text-align: right;
+}
+
+.typing_message p {
+  font-size: 14px;
+  font-family: "Raleway";
+  color: rgb(120, 120, 120);
+  line-height: 1.714;
+}
+
+.typing_icons p {
+  font-size: 14px;
+  font-family: "Raleway";
+  color: rgb(120, 120, 120);
+  line-height: 1.714;
+  text-align: right;
+}
+
+.typing_icons img {
+  margin: 5px;
+}
+
+/* стили для списка контактов */
+.contact_list {
+  border: 1px solid #ebebeb;
+  height: 935px;
+}
+
+.contact_title {
+  height: 100px;
+}
+
+.contact_picture {
+  float: left;
+  margin-right: 15px;
+  margin-top: 30px;
+}
+
+.contact_details {
+  margin-top: 30px;
+}
+
+.contact_name {
+  font-size: 16px;
+  font-family: "Raleway";
+  color: rgb(5, 28, 44);
+  font-weight: bold;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.contact_status {
+  font-size: 13px;
+  font-family: "Raleway";
+  color: rgb(5, 28, 44);
+  line-height: 1.846;
+}
+
+.icons {
+  text-align: center;
+}
+
+.icons img {
+  margin: 30px;
+}
+
+.search_bar {
+  height: 55px;
+  background-color: #f7f8fb;
+  border-top: 1px solid #d4d5d8;
+  border-bottom: 1px solid #d4d5d8;
+}
+
+.search_text {
+  font-size: 13px;
+  font-family: "Raleway";
+  color: rgb(120, 120, 120);
+  line-height: 1.846;
+}
+
+.search_text p {
+  padding-top: 15px;
+}
+
+.contact_menu {
+  padding: 0;
+  display: flex;
+}
+
+.menu_item_active {
+  height: 45px;
+  border: 1px solid #184acf;
+  border-top: none;
+  border-left: none;
+  color: #184acf;
+}
+
+.active_item {
+  font-size: 14px;
+  font-family: "Raleway";
+  font-weight: bold;
+  line-height: 1.714;
+}
+
+.menu_item2 {
+  height: 45px;
+  border: 1px solid #d4d5d8;
+  border-top: none;
+}
+
+.menu_item3 {
+  height: 45px;
+  border: 1px solid #d4d5d8;
+  border-top: none;
+  border-right: none;
+}
+
+.menu_item p {
+  font-size: 14px;
+  font-family: "Raleway";
+  line-height: 1.714;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.menu_item p a {
+  font-size: 14px;
+  font-family: "Raleway";
+  line-height: 1.714;
+  text-decoration: none;
+  color: black;
+}
+
+.row_contact1 {
+  margin-top: 30px;
+}
+
+.contact_image img {
+  border-radius: 30px;
+  max-width: 3rem;
+}
+
+.contact_name {
+  font-size: 15px;
+  font-family: "Raleway";
+  color: rgb(5, 28, 44);
+  line-height: 1.6;
+}
+
+.contact_message {
+  font-size: 13px;
+  font-family: "Raleway";
+  color: rgb(145, 150, 154);
+  line-height: 1.846;
+}
+
+.message_quantity {
+  font-size: 14px;
+  font-family: "Raleway";
+  color: rgb(69, 69, 69);
+  line-height: 1.714;
+  text-align: right;
+  margin-bottom: 0;
+}
+
+.details {
+  padding-left: 0;
+}
+
+.date {
+  font-size: 12px;
+  font-family: "Raleway";
+  color: rgb(145, 150, 154);
+  line-height: 2;
+  text-align: right;
+}
+
+.contact1 {
+  border: 1px solid #ebebeb;
+  border-left: none;
+}
+
+.contact_active {
+  background-color: #f7f8fb;
+  border: 1px solid #ebebeb;
+  border-left: none;
+}
+
+.details3 {
+  margin-top: 20px;
+  margin-left: -20px;
+  padding-left: 0;
+}
+
+@media only screen and (max-width: 1200px) {
+  .reply1 {
+    margin-left: 190px;
+  }
+
+  .reply2 {
+    margin-left: 60px;
+  }
+}
+
+@media only screen and (max-width: 990px) {
+  .contact_title {
+    height: 100px;
+  }
+
+  .contact_picture {
+    margin-top: 0;
+  }
+
+  .contact_image {
+    float: left;
+  }
+
+  .contact1 {
+    height: 100px;
+  }
+
+  .contact_text {
+    float: left;
+  }
+}
