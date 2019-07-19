@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {concatMap, first, map, shareReplay, tap} from "rxjs/operators";
 import {HttpService} from "./http.service";
+import { AuthService } from '../../../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,12 @@ export class StoreService {
 
   public init$: Observable<any>;
 
-  constructor(private http: HttpService) {
-    this.init();
-  }
+    constructor(
+        private http: HttpService,
+        private authService: AuthService
+    ) {
+        this.init();
+    }
 
   public init(): Observable<any> {
     if (this.init$) {
@@ -49,15 +53,16 @@ export class StoreService {
   }
 
   private getCurrentUser(): Observable<User> {
-    const search = +location.search.match(/userId\=(\d+)/);
-    const currentUserId:number = Array.isArray(search) ? search[1] : 1;
+    // const search = +location.search.match(/userId\=(\d+)/);
+    // const currentUserId:number = Array.isArray(search) ? search[1] : 1;
 
-    return this.getUsers()
-      .pipe(
-        map(users => users.find(item => +item.id === currentUserId)),
-        tap(user  => this.currentUser = user),
-        shareReplay(1),
-      );
+    // return this.getUsers()
+    //   .pipe(
+    //     map(users => users.find(item => +item.id === currentUserId)),
+    //     tap(user  => this.currentUser = user),
+    //     shareReplay(1),
+    //   );
+    return this.authService.currentUserObservable;
   }
 
   private getChats(): Observable<Chat[]> {

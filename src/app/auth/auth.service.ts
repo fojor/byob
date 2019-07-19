@@ -26,6 +26,7 @@ export class AuthService {
         return this.afAuth.auth.createUserWithEmailAndPassword(formData.email, formData.password)
                 .then((credential: auth.UserCredential) => {
                     this.updateUserInfo(credential.user.uid, {...formData});
+                    credential.user.sendEmailVerification();
                 });
     }
 
@@ -73,6 +74,7 @@ export class AuthService {
                     data.email = response.additionalUserInfo.profile['email'];
                     data.gender = response.additionalUserInfo.profile['gender'];
                     this.updateUserInfo(response.user.uid, data);
+                    response.user.sendEmailVerification();
                 }
             });
 
@@ -101,6 +103,7 @@ export class AuthService {
                     data.email = response.additionalUserInfo.profile['email'];
                     //data.gender = response.additionalUserInfo.profile['gender'];
                     this.updateUserInfo(response.user.uid, data);
+                    response.user.sendEmailVerification();
                 }
             });
     }
