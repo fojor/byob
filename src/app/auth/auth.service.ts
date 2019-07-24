@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFirestore } from '@angular/fire/firestore'
 import { auth } from 'firebase/app';
 import { Observable } from 'rxjs';
+import { User } from '../shared/models/user';
 
 @Injectable()
 export class AuthService {
@@ -11,14 +13,15 @@ export class AuthService {
 
     constructor(
         private afAuth: AngularFireAuth, 
-        private db: AngularFireDatabase
+        //private db: AngularFireDatabase,
+        private db: AngularFirestore,
     ) { }
 
     get authenticated(): boolean {
         return this.isLoggedIn;
     }
 
-    get currentUserObservable(): Observable<any> {
+    get currentUserObservable(): Observable<firebase.User> {
         return this.afAuth.authState;
     }
 
@@ -109,11 +112,19 @@ export class AuthService {
     }
 
     private updateUserInfo(uid: string, data: any) {
-        let update = {};
-        if(data.password) {
-            delete data.password;
-        }
-        update['/users/' + uid] = data;
-        this.db.database.ref().update(update);
+
+        let user = <User> {
+            id: uid,
+            email: data.email,
+            first_name: data.firstName,
+            last_name: data.lastName,
+            birthday: data.birthday,
+            gender: data.gender,
+            status: 1
+        }   
+
+        this.db
+            .collection<User>('users')
+            .add(user);
     }
 }

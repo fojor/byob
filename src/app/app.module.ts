@@ -27,6 +27,8 @@ import {PubnubService} from './chat/src/app/chat-container/pubnub.service';
 const environment = {
   production: false,
   firebase: {
+    //apiKey: 'AIzaSyB8MISXOAWoWSUOHjeBzQ1ES83_k-AZh8g',
+    //projectId: 'byob-cbaea',
     apiKey: 'AIzaSyDCTuNMDmdTEOIeg__cBrwno-R_wNMKeuU',
     projectId: 'byob-chat',
     authDomain: 'byob-chat.firebaseapp.com',

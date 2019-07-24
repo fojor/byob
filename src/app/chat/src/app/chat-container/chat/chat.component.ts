@@ -3,6 +3,7 @@ import {fromEvent, interval, Observable} from "rxjs";
 import {debounceTime, distinctUntilChanged, first, map, takeUntil, tap} from "rxjs/operators";
 import {SearchService} from "../search.service";
 import {DomSanitizer} from "@angular/platform-browser";
+import {User} from '../../../../../shared';
 
 @Component({
   selector: 'chat',

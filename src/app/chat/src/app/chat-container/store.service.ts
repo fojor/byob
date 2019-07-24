@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {concatMap, first, map, shareReplay, tap} from "rxjs/operators";
-import {HttpService} from "./http.service";
+import { Observable } from "rxjs";
+import { concatMap, first, map, shareReplay, tap, combineLatest } from "rxjs/operators";
+import { HttpService } from "./http.service";
 import { AuthService } from '../../../../auth/auth.service';
+import { User } from '../../../../shared';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class StoreService {
     );
   }
 
-  public addChat(channel: string, participants: number[], isPrivate: boolean = false): Chat {
+  public addChat(channel: string, participants: string[], isPrivate: boolean = false): Chat {
     const chat = {
       channel: channel,
       is_private: isPrivate,
@@ -53,8 +54,20 @@ export class StoreService {
   }
 
   private getCurrentUser(): Observable<User> {
-    // const search = +location.search.match(/userId\=(\d+)/);
-    // const currentUserId:number = Array.isArray(search) ? search[1] : 1;
+    //const search = +location.search.match(/userId\=(\d+)/);
+    //const currentUserId:number = Array.isArray(search) ? search[1] : 1;
+
+    return this.authService.currentUserObservable
+            .pipe(
+                combineLatest(this.getUsers()),                
+            )
+            .pipe(
+                map(([firebaseUser, users])=> {
+                    return users.find(i => i.id === firebaseUser.uid)
+                }),
+                tap(user  => this.currentUser = user),
+                shareReplay(1),
+            )
 
     // return this.getUsers()
     //   .pipe(
@@ -62,7 +75,7 @@ export class StoreService {
     //     tap(user  => this.currentUser = user),
     //     shareReplay(1),
     //   );
-    return this.authService.currentUserObservable;
+    
   }
 
   private getChats(): Observable<Chat[]> {

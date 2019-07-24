@@ -3,6 +3,7 @@ import {PubnubService} from "./pubnub.service";
 import {StoreService} from "./store.service";
 import {HttpService} from "./http.service";
 import {DropboxService} from "./dropbox.service";
+import {User} from '../../../../shared';
 
 @Component({
   selector: 'chat-container',

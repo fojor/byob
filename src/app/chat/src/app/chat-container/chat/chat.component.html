@@ -29,7 +29,8 @@
                     class="message"
                 >
                   <div class="message_picture">
-                    <img alt="user" class="message_image" src="https://randomuser.me/api/portraits/men/{{message.sender}}.jpg">
+                    <!--sender-->
+                    <img alt="user" class="message_image" src="https://randomuser.me/api/portraits/men/1.jpg">
                   </div>
                   <div class="time_stamp">
                     <p class="timing">{{(message.timestamp|date:'shortTime') || '08:35PM'}}</p>
@@ -43,7 +44,8 @@
                 </div><!-- message -->
                 <ng-template #reply class="reply">
                   <div class="reply_picture">
-                    <img alt="user" class="reply_image" src="https://randomuser.me/api/portraits/men/{{message.sender}}.jpg">
+                      <!--sender-->
+                    <img alt="user" class="reply_image" src="https://randomuser.me/api/portraits/men/1.jpg">
                   </div>
                   <div class="reply_time_stamp">
                     <p class="timing">{{(message.timestamp|date:'shortTime') || '08:35PM'}}</p>
@@ -90,7 +92,8 @@
         <div class="row">
           <div class="col-md-12 contact_title">
             <div class="contact_picture">
-              <img alt="user" class="reply_image" src="https://randomuser.me/api/portraits/men/{{currentUser.id}}.jpg">
+                <!--current user-->
+              <img alt="user" class="reply_image" src="https://randomuser.me/api/portraits/men/2.jpg">
             </div><!-- contact_picture -->
             <div class="contact_details">
               <p class="contact_name">{{currentUser.first_name}} {{currentUser.last_name}}</p>
@@ -185,7 +188,8 @@
               <div class="col-md-12 contact1">
                 <div class="row row_contact1">
                   <div class="col-md-2 contact_image">
-                    <img alt="user image" src="https://randomuser.me/api/portraits/men/{{user.id}}.jpg">
+                      <!--user-->
+                    <img alt="user image" src="https://randomuser.me/api/portraits/men/3.jpg">
                   </div><!-- contact_image -->
                   <div class="col-md-8 contact_text">
                     <p class="contact_name">{{user.first_name}} {{user.last_name}}</p>
