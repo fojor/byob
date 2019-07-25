@@ -59,17 +59,11 @@
           </div>
 
           <div class="userImg">
-
-            <!-- {{profileImage}} -->
-
-            <img ng-if="!$parent.profileImage" src="assets/img/userimg.jpg" alt="userimg">
-
-            <!-- <img ng-if="$parent.profileImage" src="{{$parent.profileImage}}" alt="userimg"> -->
-
+            <img *ngIf="user && user.photoURL" [src]="user.photoURL" alt="userimg" width="130" height="130">
+            <img *ngIf="!user || !user.photoURL" src="assets/img/avatar.jpg" alt="userimg" width="130" height="130">
           </div>
 
-          <h1 class="username">Welcome, User
-            <!--{{$parent.userName}}-->!</h1>
+          <h1 class="username">Welcome, {{ user.first_name }}!</h1>
 
           <hr>
 

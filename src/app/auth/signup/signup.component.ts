@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 // import { AngularFireAuth } from '@angular/fire/auth';
 // import { auth } from 'firebase/app';
 import { AuthService } from '../auth.service';
+import { FileService } from '../../services/file.service';
 
 @Component({
   selector: 'blv-signup',
@@ -14,6 +15,9 @@ import { AuthService } from '../auth.service';
 export class SignupComponent implements OnInit {
   successMsg = '';
   serverError: string;
+  imageUploadError: string;
+  uploadInProgress: boolean = false;
+
   signupForm: FormGroup;
   data = {
     days: this.getDays(),
@@ -23,7 +27,8 @@ export class SignupComponent implements OnInit {
 
     constructor(
         private router: Router, 
-        private authService: AuthService
+        private authService: AuthService,
+        private fileService: FileService
     ) { }
 
   ngOnInit() {
@@ -37,7 +42,8 @@ export class SignupComponent implements OnInit {
         month: new FormControl(''),
         year: new FormControl('')
       }),
-      gender: new FormControl('')
+      gender: new FormControl(''),
+      photoURL: new FormControl(''),
     });
   }
 
@@ -77,7 +83,35 @@ export class SignupComponent implements OnInit {
     return years;
   }
 
+    uploadPhoto(event) {
 
+        let file = event.target.files[0];
+
+        if(file && file.type) {
+
+            if(!/image\/jpeg|image\/png/.test(file.type)) {
+                this.imageUploadError = 'Unable to upload file. Supported file extensions: .jpg, .jpeg, .png';
+            }
+            else {
+                this.imageUploadError = null;
+                this.uploadInProgress = true;
+
+                this.fileService.upload('/noauth/' + Math.random().toString(36).slice(2), event.target.files[0])
+                    .then(url => {
+                        this.signupForm.controls.photoURL.setValue(url) 
+                    })
+                    .catch((err: any) => {
+                        if(err.code === 'storage/unauthorized') {
+                            this.imageUploadError = 'Unable to upload file. Maximum upload file size: 2 MB.'
+                        }
+                        else {
+                            this.imageUploadError = 'Unable to upload file. Unknown error.'
+                        }
+                    })
+                    .then(() => this.uploadInProgress = false);  
+            }         
+        }
+    }
 
 }
 

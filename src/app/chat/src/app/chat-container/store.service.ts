@@ -53,10 +53,7 @@ export class StoreService {
     chat.participants.push(user.id);
   }
 
-  private getCurrentUser(): Observable<User> {
-    //const search = +location.search.match(/userId\=(\d+)/);
-    //const currentUserId:number = Array.isArray(search) ? search[1] : 1;
-
+  public getCurrentUser(): Observable<User> {
     return this.authService.currentUserObservable
             .pipe(
                 combineLatest(this.getUsers()),                
@@ -68,14 +65,6 @@ export class StoreService {
                 tap(user  => this.currentUser = user),
                 shareReplay(1),
             )
-
-    // return this.getUsers()
-    //   .pipe(
-    //     map(users => users.find(item => +item.id === currentUserId)),
-    //     tap(user  => this.currentUser = user),
-    //     shareReplay(1),
-    //   );
-    
   }
 
   private getChats(): Observable<Chat[]> {

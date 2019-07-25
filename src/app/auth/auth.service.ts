@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore'
 import { auth } from 'firebase/app';
 import { Observable } from 'rxjs';
@@ -120,7 +119,8 @@ export class AuthService {
             last_name: data.lastName,
             birthday: data.birthday,
             gender: data.gender,
-            status: 1
+            status: 1,
+            photoURL: data.photoURL
         }   
 
         this.db

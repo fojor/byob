@@ -10,4 +10,5 @@ export interface User {
         month: string,
         year: string
     }
+    photoURL: string,
 }

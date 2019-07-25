@@ -4,7 +4,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppComponent } from './app.component';
@@ -32,7 +32,8 @@ const environment = {
     apiKey: 'AIzaSyDCTuNMDmdTEOIeg__cBrwno-R_wNMKeuU',
     projectId: 'byob-chat',
     authDomain: 'byob-chat.firebaseapp.com',
-    databaseURL: 'https://byob-chat.firebaseio.com/'
+    databaseURL: 'https://byob-chat.firebaseio.com/',
+    storageBucket: "gs://byob-chat.appspot.com/",
   }
 };
 
@@ -44,12 +45,12 @@ const environment = {
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireDatabaseModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
     HttpClientModule,
     AppRoutingModule,
     SharedModule,
     // ChatModule,
-    AngularFireAuthModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

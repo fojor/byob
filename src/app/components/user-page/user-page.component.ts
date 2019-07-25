@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+
+import { StoreService } from '../../chat/src/app/chat-container/store.service';
+import { User } from '../../../app/shared';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'blv-user-page',
@@ -8,9 +13,19 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class UserPageComponent implements OnInit {
 
-  searchForm: FormGroup;
+    user: User;
 
-  constructor() { }
+    searchForm: FormGroup;
+
+    constructor(
+        private storeService: StoreService
+    ) { 
+        this.storeService.getCurrentUser()
+            .pipe(
+                take(1),
+            )
+            .subscribe(user => this.user = user)
+    }
 
   ngOnInit() {
     this.searchForm = new FormGroup({
