@@ -96,7 +96,7 @@ export class SignupComponent implements OnInit {
                 this.imageUploadError = null;
                 this.uploadInProgress = true;
 
-                this.fileService.upload('/noauth/' + Math.random().toString(36).slice(2), event.target.files[0])
+                this.fileService.upload('/noauth/avatars/' + Math.random().toString(36).slice(2), event.target.files[0])
                     .then(url => {
                         this.signupForm.controls.photoURL.setValue(url) 
                     })
