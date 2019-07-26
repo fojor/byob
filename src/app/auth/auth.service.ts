@@ -59,7 +59,7 @@ export class AuthService {
         provider.addScope("user_gender");
         return this.afAuth.auth.signInWithPopup(provider)
             .then(response => {
-                //console.log(response);
+                console.log(response);
                 let data: any = {};
                 if(response.additionalUserInfo.isNewUser) {
                     let birthday = response.additionalUserInfo.profile['birthday'];  
@@ -75,6 +75,11 @@ export class AuthService {
                     data.lastName = response.additionalUserInfo.profile['last_name'];
                     data.email = response.additionalUserInfo.profile['email'];
                     data.gender = response.additionalUserInfo.profile['gender'];
+                    let picture = response.additionalUserInfo.profile['picture'];
+                    if(picture && picture.data && picture.data.url) {
+                        data.photoURL = picture.data.url;
+                    }
+
                     this.updateUserInfo(response.user.uid, data);
                     response.user.sendEmailVerification();
                 }
@@ -88,7 +93,7 @@ export class AuthService {
         provider.addScope('profile');
         return this.afAuth.auth.signInWithPopup(provider)
             .then(response => {
-                //console.log(response);
+                console.log(response);
                 let data: any = {};
                 if(response.additionalUserInfo.isNewUser) {
                     // let birthday = response.additionalUserInfo.profile['birthday'];  
@@ -103,6 +108,7 @@ export class AuthService {
                     data.firstName = response.additionalUserInfo.profile['given_name'];
                     data.lastName = response.additionalUserInfo.profile['family_name'];
                     data.email = response.additionalUserInfo.profile['email'];
+                    data.photoURL = response.additionalUserInfo.profile['picture'];
                     //data.gender = response.additionalUserInfo.profile['gender'];
                     this.updateUserInfo(response.user.uid, data);
                     response.user.sendEmailVerification();
@@ -114,17 +120,24 @@ export class AuthService {
 
         let user = <User> {
             id: uid,
-            email: data.email,
-            first_name: data.firstName,
-            last_name: data.lastName,
-            birthday: data.birthday,
-            gender: data.gender,
             status: 1,
-            photoURL: data.photoURL
-        }   
+        } 
+
+        this.setPersonalDataField(user, 'email', data.email);
+        this.setPersonalDataField(user, 'first_name', data.firstName);
+        this.setPersonalDataField(user, 'last_name', data.lastName);
+        this.setPersonalDataField(user, 'birthday', data.birthday);
+        this.setPersonalDataField(user, 'gender', data.gender);
+        this.setPersonalDataField(user, 'photoURL', data.photoURL);
 
         this.db
             .collection<User>('users')
             .add(user);
+    }
+
+    private setPersonalDataField(obj: User, key: string, value: any) {
+        if(value) {
+            obj[key] = value;
+        }
     }
 }
