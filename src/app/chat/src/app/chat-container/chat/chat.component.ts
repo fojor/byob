@@ -50,12 +50,22 @@ export class ChatComponent implements OnInit {
       ;
 
       const user = this.users.find(item => +item.id === +participants[0]);
-
-      return `${user.first_name} ${user.last_name}`;
+        if(user) {
+            return `${user.first_name} ${user.last_name}`;
+        }
     }
 
     return '';
   }
+
+    public getPhoto(chat: Chat): string {
+        const participants = chat.participants.filter(item => +item !== +this.currentUser.id);
+        const user = this.users.find(item => +item.id === +participants[0]);
+        if(user) {
+            return user.photoURL;
+        }
+        return '';
+    }
 
   public getParticipant(chat: Chat): User {
     if (chat && chat.participants) {

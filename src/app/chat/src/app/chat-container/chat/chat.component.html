@@ -30,7 +30,7 @@
                 >
                   <div class="message_picture">
                     <!--sender-->
-                    <img alt="user" class="message_image" src="https://randomuser.me/api/portraits/men/1.jpg">
+                    <img alt="user" class="message_image" src="{{ currentUser?.photoURL || 'assets/img/avatar.jpg' }}">
                   </div>
                   <div class="time_stamp">
                     <p class="timing">{{(message.timestamp|date:'shortTime') || '08:35PM'}}</p>
@@ -45,7 +45,7 @@
                 <ng-template #reply class="reply">
                   <div class="reply_picture">
                       <!--sender-->
-                    <img alt="user" class="reply_image" src="https://randomuser.me/api/portraits/men/1.jpg">
+                    <img alt="user" class="reply_image" src="{{ getPhoto(currentChat) || 'assets/img/avatar.jpg' }} ">
                   </div>
                   <div class="reply_time_stamp">
                     <p class="timing">{{(message.timestamp|date:'shortTime') || '08:35PM'}}</p>
@@ -93,12 +93,11 @@
           <div class="col-md-12 contact_title">
             <div class="contact_picture">
                 <!--current user-->
-                <img alt="user" class="reply_image" src="{{ currentUser && currentUser.photoURL ? currentUser.photoURL : 'assets/img/avatar.jpg' }}">
+                <img alt="user" class="reply_image" src="{{ currentUser?.photoURL || 'assets/img/avatar.jpg' }}">
             </div><!-- contact_picture -->
             <div class="contact_details">
               <p class="contact_name">{{currentUser.first_name}} {{currentUser.last_name}}</p>
-              <p class="contact_status">Status : Available <img alt="status" id="status_available"
-                                                                src="assets/img/status_available.jpg"></p>
+              <p class="contact_status">Status : Available <img alt="status" id="status_available" src="assets/img/status_available.jpg"></p>
             </div><!-- contact_details -->
           </div><!-- contact_title -->
         </div><!-- row -->
@@ -158,10 +157,7 @@
               <div class="col-md-12 contact1">
                 <div class="row row_contact1">
                   <div class="col-md-2 contact_image">
-                    <img *ngIf="chat.is_private"
-                         alt="user image"
-                         src="https://randomuser.me/api/portraits/men/{{getParticipant(chat).id}}.jpg"
-                    >
+                    <img *ngIf="chat.is_private" alt="user image" src="{{ getPhoto(chat) || 'assets/img/avatar.jpg' }}">
                   </div><!-- contact_image -->
                   <div class="col-md-8 contact_text">
                     <p class="contact_name">{{getTitle(chat)}}</p>
@@ -189,7 +185,7 @@
                 <div class="row row_contact1">
                   <div class="col-md-2 contact_image">
                       <!--user-->
-                    <img alt="user image" src="https://randomuser.me/api/portraits/men/3.jpg">
+                    <img alt="user image" src="{{ user?.photoURL || 'assets/img/avatar.jpg' }}">
                   </div><!-- contact_image -->
                   <div class="col-md-8 contact_text">
                     <p class="contact_name">{{user.first_name}} {{user.last_name}}</p>
