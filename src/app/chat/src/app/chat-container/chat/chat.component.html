@@ -93,7 +93,7 @@
           <div class="col-md-12 contact_title">
             <div class="contact_picture">
                 <!--current user-->
-              <img alt="user" class="reply_image" src="https://randomuser.me/api/portraits/men/2.jpg">
+                <img alt="user" class="reply_image" src="{{ currentUser && currentUser.photoURL ? currentUser.photoURL : 'assets/img/avatar.jpg' }}">
             </div><!-- contact_picture -->
             <div class="contact_details">
               <p class="contact_name">{{currentUser.first_name}} {{currentUser.last_name}}</p>
