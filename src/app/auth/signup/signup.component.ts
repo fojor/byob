@@ -29,7 +29,9 @@ export class SignupComponent implements OnInit {
         private router: Router, 
         private authService: AuthService,
         private fileService: FileService
-    ) { }
+    ) { 
+        //this.authService.logOut();
+    }
 
   ngOnInit() {
     this.signupForm = new FormGroup({
@@ -95,6 +97,7 @@ export class SignupComponent implements OnInit {
             else {
                 this.imageUploadError = null;
                 this.uploadInProgress = true;
+                this.signupForm.controls.photoURL.setValue(''); 
 
                 this.fileService.upload('/noauth/avatars/' + Math.random().toString(36).slice(2), event.target.files[0])
                     .then(url => {
