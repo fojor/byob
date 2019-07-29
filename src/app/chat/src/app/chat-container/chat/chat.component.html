@@ -45,7 +45,7 @@
                 <ng-template #reply class="reply">
                   <div class="reply_picture">
                       <!--sender-->
-                    <img alt="user" class="reply_image" src="{{ getPhoto(currentChat) || 'assets/img/avatar.jpg' }} ">
+                    <img alt="user" class="reply_image" src="{{ getSenderPhoto(message.sender) || 'assets/img/avatar.jpg' }} ">
                   </div>
                   <div class="reply_time_stamp">
                     <p class="timing">{{(message.timestamp|date:'shortTime') || '08:35PM'}}</p>

@@ -30,6 +30,7 @@ export class PubnubService {
 
     this.pubnub.subscribe({
       channels: [channel],
+      withPresence: true
     });
   }
 

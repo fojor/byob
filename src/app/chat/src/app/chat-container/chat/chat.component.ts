@@ -41,6 +41,8 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {}
 
   public getTitle(chat: Chat): string {
+    //console.log(chat);
+
     if (chat && !chat.is_private && chat.participants) {
       return  `${chat.participants.length} peoples`;
     } else if (chat && chat.is_private && chat.participants) {
@@ -59,8 +61,16 @@ export class ChatComponent implements OnInit {
   }
 
     public getPhoto(chat: Chat): string {
-        const participants = chat.participants.filter(item => +item !== +this.currentUser.id);
-        const user = this.users.find(item => +item.id === +participants[0]);
+        const participants = chat.participants.filter(item => item !== this.currentUser.id);
+        const user = this.users.find(item => item.id === participants[0]);
+        if(user) {
+            return user.photoURL;
+        }
+        return '';
+    }
+
+    public getSenderPhoto(senderId: string) {
+        const user = this.users.find(item => item.id === senderId);
         if(user) {
             return user.photoURL;
         }
