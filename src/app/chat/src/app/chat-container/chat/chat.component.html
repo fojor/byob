@@ -157,7 +157,8 @@
               <div class="col-md-12 contact1">
                 <div class="row row_contact1">
                   <div class="col-md-2 contact_image">
-                    <img *ngIf="chat.is_private" alt="user image" src="{{ getPhoto(chat) || 'assets/img/avatar.jpg' }}">
+                    <div class="user_status" [ngClass]="{ 'online': isOnline(getParticipant(chat)?.id) }"></div>
+                    <img *ngIf="chat.is_private" alt="user image" src="{{ getParticipant(chat)?.photoURL || 'assets/img/avatar.jpg' }}">
                   </div><!-- contact_image -->
                   <div class="col-md-8 contact_text">
                     <p class="contact_name">{{getTitle(chat)}}</p>
@@ -184,7 +185,7 @@
               <div class="col-md-12 contact1">
                 <div class="row row_contact1">
                   <div class="col-md-2 contact_image">
-                      <!--user-->
+                    <div class="user_status" [ngClass]="{ 'online': isOnline(user?.id) }"></div>
                     <img alt="user image" src="{{ user?.photoURL || 'assets/img/avatar.jpg' }}">
                   </div><!-- contact_image -->
                   <div class="col-md-8 contact_text">

@@ -4,6 +4,7 @@ import {debounceTime, distinctUntilChanged, first, map, takeUntil, tap} from "rx
 import {SearchService} from "../search.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {User} from '../../../../../shared';
+import { PubnubService } from '../pubnub.service';
 
 @Component({
   selector: 'chat',
@@ -36,36 +37,27 @@ export class ChatComponent implements OnInit {
   constructor(
     private search: SearchService,
     private sanitizer: DomSanitizer,
+    private pubnub: PubnubService,
   ) {}
 
   ngOnInit(): void {}
 
-  public getTitle(chat: Chat): string {
-    //console.log(chat);
+    public getTitle(chat: Chat): string {
+        //console.log(chat);
 
-    if (chat && !chat.is_private && chat.participants) {
-      return  `${chat.participants.length} peoples`;
-    } else if (chat && chat.is_private && chat.participants) {
+        if (chat && !chat.is_private && chat.participants) {
+            return  `${chat.participants.length} peoples`;
+        } else if (chat && chat.is_private && chat.participants) {
 
-      const participants = chat.participants
-        .filter(item => +item !== +this.currentUser.id)
-      ;
+            const participants = chat.participants
+                .filter(item => +item !== +this.currentUser.id);
 
-      const user = this.users.find(item => +item.id === +participants[0]);
-        if(user) {
-            return `${user.first_name} ${user.last_name}`;
+            const user = this.users.find(item => +item.id === +participants[0]);
+            if(user) {
+                return `${user.first_name} ${user.last_name}`;
+            }
         }
-    }
 
-    return '';
-  }
-
-    public getPhoto(chat: Chat): string {
-        const participants = chat.participants.filter(item => item !== this.currentUser.id);
-        const user = this.users.find(item => item.id === participants[0]);
-        if(user) {
-            return user.photoURL;
-        }
         return '';
     }
 
@@ -77,22 +69,24 @@ export class ChatComponent implements OnInit {
         return '';
     }
 
-  public getParticipant(chat: Chat): User {
-    if (chat && chat.participants) {
-      const participants = chat.participants
-        .filter(item => +item !== +this.currentUser.id)
-      ;
+    public getParticipant(chat: Chat): User {
+        if (chat && chat.participants) {
+            const participants = chat.participants
+                .filter(item => item !== this.currentUser.id);
 
-      return this.users.find(item => +item.id === +participants[0]);
+            return this.users.find(item => item.id === participants[0]);
+        }
+
+        return null;
     }
 
-    return {} as any;
-  }
+    public isOnline(userId: string) {
+        return this.pubnub.getOnlineUsers().indexOf(userId) > -1;
+    }
 
-
-  public emitOpenChat(chat: Chat): void {
-    this.openChat.emit(chat);
-  }
+    public emitOpenChat(chat: Chat): void {
+        this.openChat.emit(chat);
+    }
 
   public emitStartChat(user: User): void {
     if (!this.isAddingParticipantMode) {

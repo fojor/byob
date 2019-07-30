@@ -50,3 +50,18 @@
 .icon__add-mode-available {
   cursor: pointer;
 }
+
+.contact_image {
+
+    .user_status {
+        width: 5px;
+        height: 5px;
+        float: right;
+        border-radius: 100%;
+        background-color: red;
+    
+        &.online {
+            background-color: green;
+        }
+    }
+}

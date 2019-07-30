@@ -88,13 +88,13 @@ export class ChatContainerComponent implements OnInit {
   }
 
   public subscribeSystem(): void {
-    this.pubnub.subscribe('system', (event: any) => {
+    this.pubnub.subscribe('system', this.store.currentUser.id, (event: any) => {
       const message: SystemMessage = event.message;
 
       if (message.type === 'create_channel') {
         const inConversation = message.participants.some(id => id === this.store.currentUser.id);
         if (inConversation) {
-          this.pubnub.subscribe(message.channel, (message: any) => {
+          this.pubnub.subscribe(message.channel, this.store.currentUser.id, (message: any) => {
             this.syncMessage(message);
           });
           const chat = this.store.addChat(message.channel, message.participants, message.is_private);
@@ -120,7 +120,7 @@ export class ChatContainerComponent implements OnInit {
         const chat = this.store.chats.find(chat => chat.channel === message.channel);
         if (inConversation) {
           if (!chat) {
-            this.pubnub.subscribe(message.channel, (message: any) => {
+            this.pubnub.subscribe(message.channel, this.store.currentUser.id, (message: any) => {
               this.syncMessage(message);
             });
 
@@ -130,7 +130,7 @@ export class ChatContainerComponent implements OnInit {
           } else {
             const alreadyInChat = message.participants.some(id => id === this.store.currentUser.id);
             if (!alreadyInChat) {
-              this.pubnub.subscribe(message.channel, (message: any) => {
+              this.pubnub.subscribe(message.channel, this.store.currentUser.id, (message: any) => {
                 this.syncMessage(message);
               });
             }
@@ -146,7 +146,7 @@ export class ChatContainerComponent implements OnInit {
     this.store.chats
       .filter(chat => chat.participants.includes(this.store.currentUser.id))
       .forEach(chat => {
-        this.pubnub.subscribe(chat.channel, (message: any) => {
+        this.pubnub.subscribe(chat.channel, this.store.currentUser.id, (message: any) => {
           this.syncMessage(message);
         });
       });
