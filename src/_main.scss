@@ -295,14 +295,6 @@ table {
   display: flex;
 }
 
-.menu_item_active {
-  height: 45px;
-  border: 1px solid #184acf;
-  border-top: none;
-  border-left: none;
-  color: #184acf;
-}
-
 .active_item {
   font-size: 14px;
   font-family: "Raleway";
@@ -310,16 +302,23 @@ table {
   line-height: 1.714;
 }
 
-.menu_item2 {
-  height: 45px;
-  border: 1px solid #d4d5d8;
-  border-top: none;
+.menu_item {
+    height: 45px;
+    border: 1px solid #d4d5d8;
+    border-top: none;  
+    cursor: pointer;
+}
+
+.menu_item.menu_item_active {
+    border-color: #184acf;
+    color: #184acf;
+}
+
+.menu_item1 {
+    border-left: none;
 }
 
 .menu_item3 {
-  height: 45px;
-  border: 1px solid #d4d5d8;
-  border-top: none;
   border-right: none;
 }
 
@@ -384,7 +383,6 @@ table {
 }
 
 .contact1 {
-  border: 1px solid #ebebeb;
   border-left: none;
 }
 

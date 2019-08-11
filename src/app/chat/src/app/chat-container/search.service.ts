@@ -9,10 +9,10 @@ export class SearchService {
 
   constructor(private store: StoreService) {}
 
-  public search(pattern: string): User[] {
+  public search(source: User[], pattern: string): User[] {
     const lowerCasePattern = pattern.toLowerCase().trim();
-
-    return this.store.users.filter(user => {
+//this.store.users
+    return  source.filter(user => {
       return `${user.first_name} ${user.last_name}`.toLowerCase().includes(lowerCasePattern) ||
               user.email.toLowerCase().includes(lowerCasePattern)
       ;

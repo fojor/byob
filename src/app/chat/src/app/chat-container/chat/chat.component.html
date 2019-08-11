@@ -1,208 +1,290 @@
 <div class="content">
-  <div class="container">
-    <div class="row">
-      <div [class.not-active-chat]="!currentChat.channel" class="col-md-8 type_field">
+    <div class="container">
         <div class="row">
-          <div class="col-md-12 type_header">
-            <div class="row">
-              <div class="col-md-6">
-                <h4>Chatting with {{getTitle(currentChat)}}</h4>
-                <p class="timing">{{(currentTime$|async)|date:'shortTime'}}</p>
-              </div><!-- col-md-6 -->
-              <div class="col-md-6">
-                <table>
-                  <th class="table_h1"><img alt="status" id="status_circle" src="assets/img/status_circle.jpg"> Status:
-                    Available
-                  </th>
-                  <th class="table_h2">2 hrs ago</th>
-                  <th class="table_h"><a href="javascript:;"><img alt="settings" class="table_img" src="assets/img/gear.png"></a></th>
-                </table>
-              </div><!-- col-md-6 -->
-            </div><!-- row -->
-          </div><!-- col-md-12 -->
-        </div><!-- row -->
-        <div class="row">
-          <div class="col-md-12 working_field">
-            <div *ngFor="let message of currentChat.messages">
-                <div
-                    *ngIf="message.sender === currentUser.id;else reply;"
-                    class="message"
-                >
-                  <div class="message_picture">
-                    <!--sender-->
-                    <img alt="user" class="message_image" src="{{ currentUser?.photoURL || 'assets/img/avatar.jpg' }}">
-                  </div>
-                  <div class="time_stamp">
-                    <p class="timing">{{(message.timestamp|date:'shortTime') || '08:35PM'}}</p>
-                  </div>
-                  <div class="message_field message1">
-                    <p class="message_text">
-                      {{message.text}}
-                      <message-file [file]="message.file" *ngIf="message.file"></message-file>
-                    </p>
-                  </div>
-                </div><!-- message -->
-                <ng-template #reply class="reply">
-                  <div class="reply_picture">
-                      <!--sender-->
-                    <img alt="user" class="reply_image" src="{{ getSenderPhoto(message.sender) || 'assets/img/avatar.jpg' }} ">
-                  </div>
-                  <div class="reply_time_stamp">
-                    <p class="timing">{{(message.timestamp|date:'shortTime') || '08:35PM'}}</p>
-                  </div>
-                  <div class="reply_field reply1">
-                    <p class="message_text">
-                      {{message.text}}
-                      <message-file [file]="message.file" *ngIf="message.file"></message-file>
-                    </p>
-                  </div>
-                </ng-template><!-- reply -->
-            </div>
-
-            <!--            <div class="row row_typing">-->
-<!--              <div class="col-md-6 col-sm-6 col-xs-6 col-typing">-->
-<!--                <div class="typing">-->
-<!--                  <p>Michael is typing... </p>-->
-<!--                </div>-->
-<!--              </div>&lt;!&ndash; col-md-6 &ndash;&gt;-->
-<!--              <div class="col-md-6 col-sm-6 col-xs-6 col-typing">-->
-<!--                <div class="emoticon">-->
-<!--                  <p>insert Emoticon <i class="far fa-smile"></i></p>-->
-<!--                </div>-->
-<!--              </div>&lt;!&ndash; col-md-6 &ndash;&gt;-->
-<!--            </div>&lt;!&ndash; row &ndash;&gt;-->
-
-            <div class="row typing_field">
-              <div class="col-md-6 col-sm-6 col-xs-6 typing_message">
-                <input (keyup.enter)="emitSendMessage()" placeholder="Type a message here" type="text" [(ngModel)]="message">
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6 typing_icons">
-                <img alt="phone" src="assets/img/icons/phone.jpg">
-                <img alt="envelope" src="assets/img/icons/envelope.jpg">
-                <img alt="camera" src="assets/img/icons/camera.jpg">
-                <img (click)="enableAddParticipantMode()" class="icon__add-participant" alt="user" src="assets/img/icons/user.jpg">
-                <img (click)="inputForUpload.click()" alt="clip" class="icon__add-file" src="assets/img/icons/paper_clip.jpg">
-                <input (change)="uploadFile.emit($event.target.files)" #inputForUpload type="file" class="input__upload-file" hidden>
-              </div>
-            </div>
-          </div><!-- col-md-12 -->
-        </div><!-- row -->
-      </div><!-- col-md-8 -->
-      <div class="col-md-4 contact_list">
-        <div class="row">
-          <div class="col-md-12 contact_title">
-            <div class="contact_picture">
-                <!--current user-->
-                <img alt="user" class="reply_image" src="{{ currentUser?.photoURL || 'assets/img/avatar.jpg' }}">
-            </div><!-- contact_picture -->
-            <div class="contact_details">
-              <p class="contact_name">{{currentUser.first_name}} {{currentUser.last_name}}</p>
-              <p class="contact_status">Status : Available <img alt="status" id="status_available" src="assets/img/status_available.jpg"></p>
-            </div><!-- contact_details -->
-          </div><!-- contact_title -->
-        </div><!-- row -->
-
-        <div class="row">
-          <div class="col-md-12 icons">
-            <img alt="message" src="assets/img/icons/message.jpg">
-            <img
-              alt="people"
-              src="assets/img/icons/people.jpg"
-              [class.icon__add-mode-available]="currentChat.channel"
-              (click)="currentChat.channel && enableAddParticipantMode()"
-            >
-            <img alt="dial" src="assets/img/icons/dial.jpg">
-            <img alt="gear" src="assets/img/gear.png">
-          </div><!-- icons -->
-        </div><!-- row -->
-
-        <div class="row">
-          <div class="col-md-12 search_bar">
-            <div class="search_text">
-              <input
-                class="search"
-                placeholder="Search here"
-                type="text"
-                [(ngModel)]="searchText"
-                #searchInput
-                (focus)="searchFocus()"
-              >
-            </div><!-- search_text -->
-          </div><!-- search_bar -->
-        </div><!-- row -->
-
-        <div class="row">
-          <div class="col-md-12 contact_menu">
-            <div class="col-md-4 menu_item_active menu_item">
-              <p class="active_item">Contact</p>
-            </div>
-            <div class="col-md-4 menu_item2 menu_item">
-              <p><a href="javascript:;">Recent</a></p>
-            </div>
-            <div class="col-md-4 menu_item3 menu_item">
-              <p><a href="javascript:;">All</a></p>
-            </div>
-          </div><!-- contact_menu -->
-        </div><!-- row -->
-
-        <div *ngIf="!searchText && !isAddingParticipantMode">
-          <div
-            *ngFor="let chat of chats"
-          >
-            <div
-              (click)="emitOpenChat(chat)"
-              [class.current]="chat.id === currentChat.id"
-              class="row chat-item"
-            >
-              <div class="col-md-12 contact1">
-                <div class="row row_contact1">
-                  <div class="col-md-2 contact_image">
-                    <div class="user_status" [ngClass]="{ 'online': isOnline(getParticipant(chat)?.id) }"></div>
-                    <img *ngIf="chat.is_private" alt="user image" src="{{ getParticipant(chat)?.photoURL || 'assets/img/avatar.jpg' }}">
-                  </div><!-- contact_image -->
-                  <div class="col-md-8 contact_text">
-                    <p class="contact_name">{{getTitle(chat)}}</p>
-                    <p class="contact_message">Hy ! How are you? What is ...</p>
-                  </div><!-- contact_text -->
-                  <div class="col-md-2 details">
-                    <p class="message_quantity">3</p>
-                    <p class="date">Yesterday</p>
-                  </div><!-- details -->
+            <div [class.not-active-chat]="!currentChat.channel" class="col-md-8 type_field">
+                <div class="row">
+                    <div class="col-md-12 type_header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Chatting with {{getTitle(currentChat)}}</h4>
+                                <p class="timing">{{(currentTime$|async)|date:'shortTime'}}</p>
+                            </div><!-- col-md-6 -->
+                            <div class="col-md-6">
+                                <table>
+                                    <th class="table_h1"><img alt="status" id="status_circle"
+                                            src="assets/img/status_circle.jpg"> Status:
+                                        Available
+                                    </th>
+                                    <th class="table_h2">2 hrs ago</th>
+                                    <th class="table_h"><a href="javascript:;"><img alt="settings" class="table_img"
+                                                src="assets/img/gear.png"></a></th>
+                                </table>
+                            </div><!-- col-md-6 -->
+                        </div><!-- row -->
+                    </div><!-- col-md-12 -->
                 </div><!-- row -->
-              </div><!-- contact1 -->
-            </div><!-- row -->
-          </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-12 working_field">
+                        <div *ngFor="let message of currentChat.messages">
+                            <div *ngIf="message.sender === currentUser.id;else reply;" class="message">
+                                <div class="message_picture">
+                                    <!--sender-->
+                                    <img alt="user" class="message_image"
+                                        src="{{ currentUser?.photoURL || 'assets/img/avatar.jpg' }}">
+                                </div>
+                                <div class="time_stamp">
+                                    <p class="timing">{{(message.timestamp|date:'shortTime') || '08:35PM'}}</p>
+                                </div>
+                                <div class="message_field message1">
+                                    <p class="message_text">
+                                        {{message.text}}
+                                        <message-file [file]="message.file" *ngIf="message.file"></message-file>
+                                    </p>
+                                </div>
+                            </div><!-- message -->
+                            <ng-template #reply class="reply">
+                                <div class="reply_picture">
+                                    <!--sender-->
+                                    <img alt="user" class="reply_image"
+                                        src="{{ getSenderPhoto(message.sender) || 'assets/img/avatar.jpg' }} ">
+                                </div>
+                                <div class="reply_time_stamp">
+                                    <p class="timing">{{(message.timestamp|date:'shortTime') || '08:35PM'}}</p>
+                                </div>
+                                <div class="reply_field reply1">
+                                    <p class="message_text">
+                                        {{message.text}}
+                                        <message-file [file]="message.file" *ngIf="message.file"></message-file>
+                                    </p>
+                                </div>
+                            </ng-template><!-- reply -->
+                        </div>
 
-        <div *ngIf="searchText || isAddingParticipantMode">
-          <div
-            *ngFor="let user of searchResults"
-          >
-            <div
-              (click)="emitStartChat(user)"
-              class="row chat-item"
-            >
-              <div class="col-md-12 contact1">
-                <div class="row row_contact1">
-                  <div class="col-md-2 contact_image">
-                    <div class="user_status" [ngClass]="{ 'online': isOnline(user?.id) }"></div>
-                    <img alt="user image" src="{{ user?.photoURL || 'assets/img/avatar.jpg' }}">
-                  </div><!-- contact_image -->
-                  <div class="col-md-8 contact_text">
-                    <p class="contact_name">{{user.first_name}} {{user.last_name}}</p>
-                    <p class="contact_message">...</p>
-                  </div><!-- contact_text -->
-                  <div class="col-md-2 details">
-                    <p class="message_quantity">3</p>
-                    <p class="date">Yesterday</p>
-                  </div><!-- details -->
+                        <!--            <div class="row row_typing">-->
+                        <!--              <div class="col-md-6 col-sm-6 col-xs-6 col-typing">-->
+                        <!--                <div class="typing">-->
+                        <!--                  <p>Michael is typing... </p>-->
+                        <!--                </div>-->
+                        <!--              </div>&lt;!&ndash; col-md-6 &ndash;&gt;-->
+                        <!--              <div class="col-md-6 col-sm-6 col-xs-6 col-typing">-->
+                        <!--                <div class="emoticon">-->
+                        <!--                  <p>insert Emoticon <i class="far fa-smile"></i></p>-->
+                        <!--                </div>-->
+                        <!--              </div>&lt;!&ndash; col-md-6 &ndash;&gt;-->
+                        <!--            </div>&lt;!&ndash; row &ndash;&gt;-->
+
+                        <div class="row typing_field">
+                            <div class="col-md-6 col-sm-6 col-xs-6 typing_message">
+                                <input (keyup.enter)="emitSendMessage()" placeholder="Type a message here" type="text"
+                                    [(ngModel)]="message">
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 typing_icons">
+                                <img alt="phone" src="assets/img/icons/phone.jpg">
+                                <img alt="envelope" src="assets/img/icons/envelope.jpg">
+                                <img alt="camera" src="assets/img/icons/camera.jpg">
+                                <img (click)="enableAddParticipantMode()" class="icon__add-participant" alt="user"
+                                    src="assets/img/icons/user.jpg">
+                                <img (click)="inputForUpload.click()" alt="clip" class="icon__add-file"
+                                    src="assets/img/icons/paper_clip.jpg">
+                                <input (change)="uploadFile.emit($event.target.files)" #inputForUpload type="file"
+                                    class="input__upload-file" hidden>
+                            </div>
+                        </div>
+                    </div><!-- col-md-12 -->
                 </div><!-- row -->
-              </div><!-- contact1 -->
-            </div><!-- row -->
-          </div>
-        </div>
+            </div><!-- col-md-8 -->
+            <div class="col-md-4 contact_list">
+                <div class="row">
+                    <div class="col-md-12 contact_title">
+                        <div class="contact_picture">
+                            <!--current user-->
+                            <img alt="user" class="reply_image"
+                                src="{{ currentUser?.photoURL || 'assets/img/avatar.jpg' }}">
+                        </div><!-- contact_picture -->
+                        <div class="contact_details">
+                            <p class="contact_name">{{currentUser.first_name}} {{currentUser.last_name}}</p>
+                            <p class="contact_status">Status : Available <img alt="status" id="status_available"
+                                    src="assets/img/status_available.jpg"></p>
+                        </div><!-- contact_details -->
+                    </div><!-- contact_title -->
+                </div><!-- row -->
 
-      </div><!-- col-md-4 -->
-    </div><!-- row -->
-  </div><!-- container -->
+                <div class="row">
+                    <div class="col-md-12 icons">
+                        <img alt="message" src="assets/img/icons/message.jpg">
+                        <img alt="people" src="assets/img/icons/people.jpg"
+                            [class.icon__add-mode-available]="currentChat.channel"
+                            (click)="currentChat.channel && enableAddParticipantMode()">
+                        <img alt="dial" src="assets/img/icons/dial.jpg">
+                        <img alt="gear" src="assets/img/gear.png">
+                    </div><!-- icons -->
+                </div><!-- row -->
+
+                <div class="row">
+                    <div class="col-md-12 search_bar">
+                        <div class="search_text">
+                            <input class="search" placeholder="Search here" type="text" [(ngModel)]="searchText"
+                                #searchInput (focus)="searchFocus()">
+                        </div><!-- search_text -->
+                    </div><!-- search_bar -->
+                </div><!-- row -->
+
+                <div class="row">
+                    <div class="col-md-12 contact_menu">
+                        <div class="col-md-4 menu_item1 menu_item"
+                            [ngClass]="{ 'menu_item_active': activeTabIndex === 0 }" (click)="activeTabIndex = 0">
+                            <p [ngClass]="{ 'active_item': activeTabIndex === 0 }">Contact</p>
+                        </div>
+                        <div class="col-md-4 menu_item2 menu_item"
+                            [ngClass]="{ 'menu_item_active': activeTabIndex === 1 }" (click)="activeTabIndex = 1">
+                            <p [ngClass]="{ 'active_item': activeTabIndex === 1 }">Recent</p>
+                        </div>
+                        <div class="col-md-4 menu_item3 menu_item"
+                            [ngClass]="{ 'menu_item_active': activeTabIndex === 2 }" (click)="activeTabIndex = 2">
+                            <p [ngClass]="{ 'active_item': activeTabIndex === 2 }">All</p>
+                        </div>
+                    </div><!-- contact_menu -->
+                </div><!-- row -->
+
+                <div class="contacts-wrapper">
+                    <div *ngIf="!searchText && !isAddingParticipantMode">
+
+                        <div *ngIf="activeTabIndex === 0">
+                            <!-- <div *ngFor="let chat of chats">
+                                        <div (click)="emitOpenChat(chat)"
+                                            [class.current]="chat.id === currentChat.id"
+                                            class="row chat-item">
+                                            <div class="col-md-12 contact1">
+                                                <div class="row row_contact1">
+                                                <div class="col-md-2 contact_image">
+                                                    <div class="user_status" [ngClass]="{ 'online': isOnline(getParticipant(chat)?.id) }"></div>
+                                                    <img *ngIf="chat.is_private" alt="user image" src="{{ getParticipant(chat)?.photoURL || 'assets/img/avatar.jpg' }}">
+                                                </div>
+                                                <div class="col-md-8 contact_text">
+                                                    <p class="contact_name">{{getTitle(chat)}}</p>
+                                                    <p class="contact_message">Hy ! How are you? What is ...</p>
+                                                </div>
+                                                <div class="col-md-2 details">
+                                                    <p class="message_quantity">3</p>
+                                                    <p class="date">Yesterday</p>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                            <div *ngFor="let user of users">
+                                <div (click)="emitOpenChat(user)" class="row chat-item">
+                                    <div class="col-md-12 contact1">
+                                        <div class="row row_contact1">
+                                            <div class="col-md-2 contact_image">
+                                                <div class="user_status" [ngClass]="{ 'online': isOnline(user?.id) }">
+                                                </div>
+                                                <img alt="user image"
+                                                    src="{{ user?.photoURL || 'assets/img/avatar.jpg' }}">
+                                            </div>
+                                            <div class="col-md-8 contact_text">
+                                                <p class="contact_name">{{user.first_name}} {{user.last_name}}</p>
+                                                <!-- <p class="contact_message"></p> -->
+                                                <save-contact [alreadySaved]="isAlreadySaved(user?.id)"
+                                                    (save)="saveContact(user?.id)">
+                                                </save-contact>
+                                            </div>
+                                            <div class="col-md-2 details">
+                                                <p class="message_quantity">3</p>
+                                                <p class="date">Yesterday</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="activeTabIndex === 1">
+                            <div *ngFor="let user of recent">
+                                <div (click)="emitOpenChat(user)" class="row chat-item">
+                                    <div class="col-md-12 contact1">
+                                        <div class="row row_contact1">
+                                            <div class="col-md-2 contact_image">
+                                                <div class="user_status" [ngClass]="{ 'online': isOnline(user?.id) }">
+                                                </div>
+                                                <img alt="user image"
+                                                    src="{{ user?.photoURL || 'assets/img/avatar.jpg' }}">
+                                            </div>
+                                            <div class="col-md-8 contact_text">
+                                                <p class="contact_name">{{user.first_name}} {{user.last_name}}</p>
+                                                <!-- <p class="contact_message">...</p> -->
+                                                <save-contact [alreadySaved]="isAlreadySaved(user?.id)"
+                                                    (save)="saveContact(user?.id)">
+                                                </save-contact>
+                                            </div>
+                                            <div class="col-md-2 details">
+                                                <p class="message_quantity">3</p>
+                                                <p class="date">Yesterday</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="activeTabIndex === 2">
+                            <div *ngFor="let user of saved">
+                                <div (click)="emitOpenChat(user)" class="row chat-item">
+                                    <div class="col-md-12 contact1">
+                                        <div class="row row_contact1">
+                                            <div class="col-md-2 contact_image">
+                                                <div class="user_status" [ngClass]="{ 'online': isOnline(user?.id) }">
+                                                </div>
+                                                <img alt="user image"
+                                                    src="{{ user?.photoURL || 'assets/img/avatar.jpg' }}">
+                                            </div>
+                                            <div class="col-md-8 contact_text">
+                                                <p class="contact_name">{{user.first_name}} {{user.last_name}}</p>
+                                                <!-- <p class="contact_message">...</p> -->
+                                                <!-- <save-contact [alreadySaved]="isAlreadySaved(user?.id)"
+                                                    (save)="saveContact(user?.id)">
+                                                </save-contact> -->
+                                            </div>
+                                            <div class="col-md-2 details">
+                                                <p class="message_quantity">3</p>
+                                                <p class="date">Yesterday</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="searchText || isAddingParticipantMode">
+                        <div *ngFor="let user of searchResults">
+                            <div (click)="emitOpenChat(user)" class="row chat-item">
+                                <div class="col-md-12 contact1">
+                                    <div class="row row_contact1">
+                                        <div class="col-md-2 contact_image">
+                                            <div class="user_status" [ngClass]="{ 'online': isOnline(user?.id) }">
+                                            </div>
+                                            <img alt="user image" src="{{ user?.photoURL || 'assets/img/avatar.jpg' }}">
+                                        </div>
+                                        <div class="col-md-8 contact_text">
+                                            <p class="contact_name">{{user.first_name}} {{user.last_name}}</p>
+                                            <!-- <p class="contact_message">...</p> -->
+                                            <save-contact [alreadySaved]="isAlreadySaved(user?.id)"
+                                                (save)="saveContact(user?.id)">
+                                            </save-contact>
+                                        </div>
+                                        <div class="col-md-2 details">
+                                            <p class="message_quantity">3</p>
+                                            <p class="date">Yesterday</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- col-md-4 -->
+        </div><!-- row -->
+    </div><!-- container -->
 </div><!-- content -->

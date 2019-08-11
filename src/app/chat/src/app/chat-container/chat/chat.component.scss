@@ -3,6 +3,9 @@
 }
 
 .chat-item {
+    border-bottom: 1px solid #ebebeb;
+    padding-right: 42px;
+
   cursor: pointer;
   &:hover {
     background: rgb(205, 234, 252);
@@ -52,11 +55,13 @@
 }
 
 .contact_image {
+    position: relative;
 
     .user_status {
         width: 5px;
         height: 5px;
-        float: right;
+        position: absolute;
+        right: 0;
         border-radius: 100%;
         background-color: red;
     
@@ -64,4 +69,11 @@
             background-color: green;
         }
     }
+}
+
+.contacts-wrapper {
+    height: calc(100% - 300px);
+    overflow: hidden scroll;
+    width: 100%;
+    padding-left: 15px;
 }

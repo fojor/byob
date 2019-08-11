@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {PubNubAngular} from "pubnub-angular2";
+import { PubNubAngular } from "pubnub-angular2";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PubnubService {
     private listeners: any = {};
@@ -35,13 +35,13 @@ export class PubnubService {
         };
 
         this.pubnub.hereNow({
-            channels: ["system"], 
+            channels: ["system"],
             includeUUIDs: true,
             includeState: true
         },
-        (status, response) => {
-            this.handleHereNowResponse(response);
-        });
+            (status, response) => {
+                this.handleHereNowResponse(response);
+            });
 
         this.pubnub.addListener(listener);
 
@@ -53,50 +53,50 @@ export class PubnubService {
         });
     }
 
-  public unsubscribe(channel: string): void {
-    this.pubnub.removeListener(this.listeners[channel]);
+    public unsubscribe(channel: string): void {
+        this.pubnub.removeListener(this.listeners[channel]);
 
-    delete(this.listeners[channel]);
+        delete (this.listeners[channel]);
 
-    this.pubnub.unsubscribe({
-      channels: [channel],
-      withPresence: true,
-    });
-  }
+        this.pubnub.unsubscribe({
+            channels: [channel],
+            withPresence: true,
+        });
+    }
 
-  public publish(channel: string, message: ChatMessage): void {
-    this.pubnub.publish({
-      channel: channel,
-      timestamp: (new Date()).getTime(),
-      message: message,
-    });
-  }
+    public publish(channel: string, message: ChatMessage): void {
+        this.pubnub.publish({
+            channel: channel,
+            timestamp: (new Date()).getTime(),
+            message: message,
+        });
+    }
 
-  public getHistory(channel: string): Promise<any> {
-    return this.pubnub.history({ channel: channel });
-  }
+    public getHistory(channel: string): Promise<any> {
+        return this.pubnub.history({ channel: channel });
+    }
 
-  public publishSystemMessage(systemMessage: SystemMessage): void {
-    this.pubnub.publish({
-      channel: 'system',
-      message: systemMessage,
-    });
-  }
+    public publishSystemMessage(systemMessage: SystemMessage): void {
+        this.pubnub.publish({
+            channel: 'system',
+            message: systemMessage,
+        });
+    }
 
-  // public createChat(channel: string, text: string): void {
-  //   const message = text + Date.now();
-  //
-  //   this.pubnub.publish({
-  //     channel: channel,
-  //     message: message,
-  //   });
-  // }
+    // public createChat(channel: string, text: string): void {
+    //   const message = text + Date.now();
+    //
+    //   this.pubnub.publish({
+    //     channel: channel,
+    //     message: message,
+    //   });
+    // }
 
     private handlePresenceEvent(data: any) {
-        if(data) {
+        if (data) {
             switch (data.action) {
                 case "state-change":
-                    if(data.state && data.state.userId) {
+                    if (data.state && data.state.userId) {
                         this.addOnlineUser(data.state.userId);
                     }
                     break;
@@ -106,7 +106,7 @@ export class PubnubService {
 
     private handleStatusEvent(statusEvent, userId) {
         if (statusEvent.category === "PNConnectedCategory") {
-            this.pubnub.setState({ 
+            this.pubnub.setState({
                 state: {
                     userId
                 },
@@ -116,10 +116,10 @@ export class PubnubService {
     }
 
     private handleHereNowResponse(data: any) {
-        
-        if(data && data.channels && data.channels.system) {
+
+        if (data && data.channels && data.channels.system) {
             const occupants: any[] = data.channels.system.occupants;
-            if(occupants) {
+            if (occupants) {
                 this.onlineUsers = occupants
                     .filter(i => i.state && i.state.userId)
                     .map(i => i.state.userId);
@@ -128,7 +128,7 @@ export class PubnubService {
     }
 
     private addOnlineUser(userId) {
-        if(this.onlineUsers.indexOf(userId) === -1) {
+        if (this.onlineUsers.indexOf(userId) === -1) {
             this.onlineUsers.push(userId);
         }
     }

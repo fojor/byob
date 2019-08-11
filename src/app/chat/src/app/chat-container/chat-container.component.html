@@ -38,13 +38,15 @@
   [currentChat]="currentChat"
   [users]="store.users"
   [chats]="store.chats"
-
+  [recent]="store.recent"
+  [saved]="store.saved"
+  
   (startChat)="startChat($event)"
   (addParticipant)="addParticipant($event)"
   (openChat)="openChat($event)"
   (sendMessage)="sendMessage($event)"
   (uploadFile)="uploadFile($event)"
->
+  (addContact)="addContact($event)">
 </chat>
 
 <!-- <footer> -->

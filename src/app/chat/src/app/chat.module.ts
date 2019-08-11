@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { ChatRoutingModule } from './chat-routing.module';
 import { ChatRootComponent } from './chat-root.component';
-import {PubNubAngular} from "pubnub-angular2";
+import { PubNubAngular } from "pubnub-angular2";
 import { ChatContainerComponent } from './chat-container/chat-container.component';
 import { ChatComponent } from './chat-container/chat/chat.component';
-import {AngularFireModule} from "@angular/fire";
-import {AngularFirestoreModule} from "@angular/fire/firestore";
-import {FormsModule} from "@angular/forms";
+import { SaveContactComponent } from './chat-container/chat/save-contact/save-contact.component';
+import { FormsModule } from "@angular/forms";
 import { FileComponent } from './chat-container/chat/file/file.component';
-import {CommonModule} from '@angular/common';
+import { CommonModule} from '@angular/common';
 
 // const environment = {
 //     production: false,
@@ -23,7 +22,8 @@ import {CommonModule} from '@angular/common';
     ChatRootComponent,
     ChatContainerComponent,
     ChatComponent,
-    FileComponent
+    FileComponent,
+    SaveContactComponent
   ],
   imports: [
     CommonModule,
