@@ -23,6 +23,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   { 
+    path: 'board', 
+    loadChildren: './components/board/board.module#BoardModule',
+    canActivate: [AuthGuard]
+  },
+  { 
     path: 'converse', 
     loadChildren: './converse/converse.module#ConverseModule',
     canActivate: [AuthGuard]
