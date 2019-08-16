@@ -4,10 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'blv-video-chart',
   templateUrl: './video-chart.component.html',
-  styleUrls: [
-    '../bootstrap/css/bootstrap.css',
-    './video-chart.component.css'],
-  encapsulation: ViewEncapsulation.ShadowDom
+  styleUrls: [ './video-chart.component.css'],
 })
 export class VideoChartComponent implements OnInit {
 

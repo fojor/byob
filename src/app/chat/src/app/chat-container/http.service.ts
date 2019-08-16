@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from "rxjs";
-import { first, shareReplay, tap, map } from "rxjs/operators";
+import { first, shareReplay, tap, map, filter } from "rxjs/operators";
 import { AngularFirestore } from "@angular/fire/firestore";
 import * as firebase from 'firebase';
 import { User } from '../../../../shared';
@@ -35,7 +35,7 @@ export class HttpService {
             .doc('contacts/' + currentUserId)
             .valueChanges()
             .pipe(
-                map((data: any) => data.users as string[]),
+                map((data: any) => data ? data.users as string[] : []),
                 shareReplay(1),
             );
     }

@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 
 import { StoreService } from '../../chat/src/app/chat-container/store.service';
 import { User } from '../../../app/shared';
@@ -11,11 +9,9 @@ import { take } from 'rxjs/operators';
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.css']
 })
-export class UserPageComponent implements OnInit {
+export class UserPageComponent {
 
     user: User;
-
-    searchForm: FormGroup;
 
     constructor(
         private storeService: StoreService
@@ -26,15 +22,4 @@ export class UserPageComponent implements OnInit {
             )
             .subscribe(user => this.user = user)
     }
-
-  ngOnInit() {
-    this.searchForm = new FormGroup({
-      search: new FormControl('')
-    });
-  }
-
-  searchIntrep() {
-    console.log('search from user page', this.searchForm.value);
-  }
-
 }

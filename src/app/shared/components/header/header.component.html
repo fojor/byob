@@ -1,0 +1,40 @@
+<div class="container-fluid top_header_links">
+    <div class="container">
+        <div class="row">
+            <a routerLink="/" class="header_logo col-md-2 col-sm-12">
+                <div>BYOB</div> <span>Be Your Own Boss</span>
+            </a>
+            <div class="header_search col-md-3 col-sm-12">
+                <form [formGroup]="searchForm" (ngSubmit)="searchIntrep()">
+                    <input type="search" formControlName="search" placeholder="Find Entrepreneur">
+                    <button type="submit"></button>
+                </form>
+            </div>
+            <div class="col-md-7 top_header_connect">
+                <ul class="header_row_menu">
+                    <li>
+                        <a routerLink="/converse">Browse</a>
+                    </li>
+                    <li>
+                        <a routerLink="/chat-room">Chat room</a>
+                    </li>
+                    <li>
+                        <a>My Connection</a>
+                    </li>
+                    <li>
+                        <a>Notifications <span class="counter">2</span></a>
+                    </li>
+                    <li>
+                        <a class="nav-drop">Messages</a>
+                    </li>
+                    <li>
+                        <a class="nav-drop" routerLink="/advertisment">Advertisment</a>
+                    </li>
+                    <li>
+                        <a routerLink="/board">Flowchart</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

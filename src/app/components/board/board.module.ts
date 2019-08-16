@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { BoardComponent } from './board.component';
-import { SharedModule } from 'src/app/shared';
+import { SharedModule } from '../../shared';
 import { DrawIOComponent } from './drawio/drawio.component';
 
 @NgModule({

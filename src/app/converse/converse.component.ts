@@ -4,10 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'blv-converse',
   templateUrl: './converse.component.html',
-  styleUrls: [
-    './bootstrap/css/bootstrap.css',
-    './converse.component.css'],
-  encapsulation: ViewEncapsulation.ShadowDom
+  styleUrls: [ './converse.component.css' ],
 })
 export class ConverseComponent implements OnInit {
 

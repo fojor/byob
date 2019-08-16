@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-12 working_field">
                         <div *ngFor="let message of currentChat.messages">
-                            <div *ngIf="message.sender === currentUser.id;else reply;" class="message">
+                            <div *ngIf="message.sender === currentUser.id; else reply;" class="message">
                                 <div class="message_picture">
                                     <!--sender-->
                                     <img alt="user" class="message_image"
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="message_field message1">
                                     <p class="message_text">
-                                        {{message.text}}
+                                        <span [innerHTML]="linkify(message.text)"></span>
                                         <message-file [file]="message.file" *ngIf="message.file"></message-file>
                                     </p>
                                 </div>
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="reply_field reply1">
                                     <p class="message_text">
-                                        {{message.text}}
+                                        <span [innerHTML]="linkify(message.text)"></span>
                                         <message-file [file]="message.file" *ngIf="message.file"></message-file>
                                     </p>
                                 </div>

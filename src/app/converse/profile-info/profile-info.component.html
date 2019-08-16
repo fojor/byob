@@ -1,79 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Profile</title>
-
-  <!-- Bootstrap -->
-  <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  -->
-  <!-- fontawesome -->
-  <!-- fontawesome -->
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
-    crossorigin="anonymous"> -->
-  <!-- стили -->
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-
-<body>
-  <header>
-    <nav class="navbar navbar-default menu">
-      <div class="container">
-        <!-- Логотип-->
-        <div class="row" id="logo_and_search">
-          <div class="col-md-2 col-sm-2">
-            <div class="header_logo col-md-1 col-sm-12">
-              <p id="logo">BYOB</p>
-              <p id="logo_sign">Be Your Own Boss</p>
-            </div>
-          </div> <!-- .col-md-2 -->
-          <!-- Форма ввода -->
-          <div class="col-md-5 col-sm-5" id="search_block">
-            <form [formGroup]="searchForm" (ngSubmit)="searchIntrep()" class="form-inline nav-form" id="search">
-              <div class="form-group has-feedback has-feedback-left" id="search_field">
-                <input type="text" formControlName="search" placeholder="     Find Entrepreneur" class="well">
-                <i class="form-control-feedback glyphicon glyphicon-search"></i>
-                <a href="#">Browse</a><br>
-              </div>
-            </form>
-          </div> <!-- .col-md-5 -->
-          <div class="col-md-5 col-sm-5" id="main_list">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav menu-section-list">
-                <li class="active-link"><a href="#">My connection</a></li>
-                <li><a href="#">Notifications</a></li>
-                <li><a href="#">Messages</a></li>
-              </ul>
-            </div>
-          </div>
-        </div> <!-- .row -->
-      </div>
-      <!--.container -->
-      <!-- Адаптивный список -->
-      <div class="container-fluid">
-        <div class="row">
-          <div id="adaptive_list" class="col-lg-12 col-md-12 col-sm-12">
-            <a href="#" id="adaptive_list_browse">Browse</a>
-            <ul class="nav navbar-nav menu-section-list" id="adaptive_list_list">
-              <li class="active-link"><a href="#">My connection</a></li>
-              <li><a href="#">Notifications</a></li>
-              <li><a href="#">Messages</a></li>
-            </ul>
-          </div>
-        </div> <!-- .row -->
-      </div>
-      <!--.container-fluid -->
-      <!-- Адаптивный список end-->
-    </nav>
-  </header>
+<div class="root">
+    <blv-header></blv-header>
 
   <div class="content">
     <div class="container">
@@ -269,6 +195,4 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+</div>

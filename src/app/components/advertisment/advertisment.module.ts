@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { AdvertismentComponent } from './advertisment.component';
-import { SharedModule } from 'src/app/shared';
+import { SharedModule } from '../../shared';
 
 @NgModule({
   imports: [

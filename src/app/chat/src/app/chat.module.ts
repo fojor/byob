@@ -8,6 +8,7 @@ import { SaveContactComponent } from './chat-container/chat/save-contact/save-co
 import { FormsModule } from "@angular/forms";
 import { FileComponent } from './chat-container/chat/file/file.component';
 import { CommonModule} from '@angular/common';
+import { SharedModule } from 'src/app/shared';
 
 // const environment = {
 //     production: false,
@@ -27,6 +28,7 @@ import { CommonModule} from '@angular/common';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     ChatRoutingModule,
     //AngularFireModule.initializeApp(environment.firebase),
     //AngularFirestoreModule,

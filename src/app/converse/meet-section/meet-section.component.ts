@@ -4,10 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'blv-meet-section',
   templateUrl: './meet-section.component.html',
-  styleUrls: [
-    '../bootstrap/css/bootstrap.min.css',
-    './meet-section.component.css'],
-  encapsulation: ViewEncapsulation.ShadowDom
+  styleUrls: [ './meet-section.component.css' ],
 })
 export class MeetSectionComponent implements OnInit {
   searchForm: FormGroup;
