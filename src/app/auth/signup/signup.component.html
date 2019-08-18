@@ -124,7 +124,7 @@
                 </p>
               <div class="checkbox mt-5">
                 <label>
-                  <input name="remember" type="checkbox" value="remember" />Remember Me
+                  <input name="remember" type="checkbox" (change)="onRememberSet()" [checked]="remember" />Remember Me
                 </label>
               </div>
               <input type="submit" value="Join Now" class="btn btncustom" [disabled]="signupForm.invalid || uploadInProgress" />

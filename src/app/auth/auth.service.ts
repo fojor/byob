@@ -27,6 +27,7 @@ export class AuthService {
     singup(formData: any): Promise<any> {
         return this.afAuth.auth.createUserWithEmailAndPassword(formData.email, formData.password)
                 .then((credential: auth.UserCredential) => {
+                    this.prolongAuth();
                     this.updateUserInfo(credential.user.uid, {...formData});
                     credential.user.sendEmailVerification();
                 });
@@ -36,6 +37,7 @@ export class AuthService {
         return this.afAuth.auth
                 .signInWithEmailAndPassword(email, password)
                 .then(() => {
+                    this.prolongAuth();
                     this.isLoggedIn = true;
                 })
     }
@@ -59,7 +61,7 @@ export class AuthService {
         provider.addScope("user_gender");
         return this.afAuth.auth.signInWithPopup(provider)
             .then(response => {
-                //console.log(response);
+                this.prolongAuth();
                 let data: any = {};
                 if(response.additionalUserInfo.isNewUser) {
                     let birthday = response.additionalUserInfo.profile['birthday'];  
@@ -93,7 +95,7 @@ export class AuthService {
         provider.addScope('profile');
         return this.afAuth.auth.signInWithPopup(provider)
             .then(response => {
-                //console.log(response);
+                this.prolongAuth();
                 let data: any = {};
                 if(response.additionalUserInfo.isNewUser) {
                     // let birthday = response.additionalUserInfo.profile['birthday'];  
@@ -114,6 +116,29 @@ export class AuthService {
                     response.user.sendEmailVerification();
                 }
             });
+    }
+
+    prolongAuth() {
+        let isLong = false;
+        let value = localStorage['remember'];
+        if(value) {
+            value = JSON.parse(value);
+            isLong = value.long;
+        }
+        let date = new Date();
+        date.setDate(date.getDate() + (isLong ? 14 : 1));
+        localStorage['remember'] = JSON.stringify({ long: isLong, date });
+    }
+
+    getAuthExpirationDate() {
+        let value = localStorage['remember'];
+        if(value) {
+            value = JSON.parse(value);
+            if(value.date) {
+                return new Date(value.date);
+            }
+        }
+        return null;
     }
 
     private updateUserInfo(uid: string, data: any) {

@@ -10,6 +10,13 @@ export class AuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    
+    let expDate = this.auth.getAuthExpirationDate();
+    if(!expDate || expDate <= new Date()) {
+        this.router.navigate(['/login']);
+        return false;
+    }
+    
     if (this.auth.authenticated) { 
         return true; 
     }

@@ -7,115 +7,121 @@ import { AuthService } from '../auth.service';
 import { FileService } from '../../services/file.service';
 
 @Component({
-  selector: 'blv-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'blv-signup',
+    templateUrl: './signup.component.html',
+    styleUrls: ['./signup.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SignupComponent implements OnInit {
-  successMsg = '';
-  serverError: string;
-  imageUploadError: string;
-  uploadInProgress: boolean = false;
 
-  signupForm: FormGroup;
-  data = {
-    days: this.getDays(),
-    months: this.getMonths(),
-    years: this.getYears()
-  };
+    successMsg = '';
+    serverError: string;
+    imageUploadError: string;
+    uploadInProgress: boolean = false;
+    remember: boolean = false;
+
+    signupForm: FormGroup;
+    data = {
+        days: this.getDays(),
+        months: this.getMonths(),
+        years: this.getYears()
+    };
 
     constructor(
-        private router: Router, 
+        private router: Router,
         private authService: AuthService,
         private fileService: FileService
-    ) { 
-        //this.authService.logOut();
+    ) {
+        this.remember = !!localStorage.getItem('remember');
     }
 
-  ngOnInit() {
-    this.signupForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      birthday: new FormGroup({
-        day: new FormControl(''),
-        month: new FormControl(''),
-        year: new FormControl('')
-      }),
-      gender: new FormControl(''),
-      photoURL: new FormControl(''),
-    });
-  }
-
-  registerUser() {
-    this.authService.singup(this.signupForm.value)
-        .then(() => this.router.navigate(['/user-page']))
-        .catch(err => this.serverError = err);
-    //console.log('user from signup', this.signupForm.value);
-    //this.successMsg = "Sign up success";
-  }
-
-  getDays() {
-    let totaldays = 31;
-    let days = [];
-    for (let i = 1; i <= totaldays; i++) {
-      days.push(i);
+    ngOnInit() {
+        this.signupForm = new FormGroup({
+            firstName: new FormControl('', Validators.required),
+            lastName: new FormControl('', Validators.required),
+            email: new FormControl('', [Validators.required, Validators.email]),
+            password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+            birthday: new FormGroup({
+                day: new FormControl(''),
+                month: new FormControl(''),
+                year: new FormControl('')
+            }),
+            gender: new FormControl(''),
+            photoURL: new FormControl(''),
+        });
     }
-    return days;
-  }
 
-  getMonths() {
-    let totalmonths = 12;
-    let months = [];
-    for (let i = 1; i <= totalmonths; i++) {
-      months.push(i);
+    registerUser() {
+        this.authService.singup(this.signupForm.value)
+            .then(() => this.router.navigate(['/user-page']))
+            .catch(err => this.serverError = err);
+        //console.log('user from signup', this.signupForm.value);
+        //this.successMsg = "Sign up success";
     }
-    return months;
-  }
 
-  getYears() {
-    let totalyears = 60;
-    let years = [];
-    let validYears = new Date().getFullYear() - 18;
-    for (let i = validYears, n = validYears - totalyears; i > n; i--) {
-      years.push(i);
+    getDays() {
+        let totaldays = 31;
+        let days = [];
+        for (let i = 1; i <= totaldays; i++) {
+            days.push(i);
+        }
+        return days;
     }
-    return years;
-  }
+
+    getMonths() {
+        let totalmonths = 12;
+        let months = [];
+        for (let i = 1; i <= totalmonths; i++) {
+            months.push(i);
+        }
+        return months;
+    }
+
+    getYears() {
+        let totalyears = 60;
+        let years = [];
+        let validYears = new Date().getFullYear() - 18;
+        for (let i = validYears, n = validYears - totalyears; i > n; i--) {
+            years.push(i);
+        }
+        return years;
+    }
 
     uploadPhoto(event) {
 
         let file = event.target.files[0];
 
-        if(file && file.type) {
+        if (file && file.type) {
 
-            if(!/image\/jpeg|image\/png/.test(file.type)) {
+            if (!/image\/jpeg|image\/png/.test(file.type)) {
                 this.imageUploadError = 'Unable to upload file. Supported file extensions: .jpg, .jpeg, .png';
             }
             else {
                 this.imageUploadError = null;
                 this.uploadInProgress = true;
-                this.signupForm.controls.photoURL.setValue(''); 
+                this.signupForm.controls.photoURL.setValue('');
 
                 this.fileService.upload('/noauth/avatars/' + Math.random().toString(36).slice(2), event.target.files[0])
                     .then(url => {
-                        this.signupForm.controls.photoURL.setValue(url) 
+                        this.signupForm.controls.photoURL.setValue(url)
                     })
                     .catch((err: any) => {
-                        if(err.code === 'storage/unauthorized') {
+                        if (err.code === 'storage/unauthorized') {
                             this.imageUploadError = 'Unable to upload file. Maximum upload file size: 2 MB.'
                         }
                         else {
                             this.imageUploadError = 'Unable to upload file. Unknown error.'
                         }
                     })
-                    .then(() => this.uploadInProgress = false);  
-            }         
+                    .then(() => this.uploadInProgress = false);
+            }
         }
     }
 
+    onRememberSet() {
+        this.remember = !this.remember;
+        localStorage['remember'] = JSON.stringify({ long: this.remember });
+    }
 }
 
 // BYOB.controller('RegisterController', ['$rootScope', '$scope', 'SessionService', 'ServerRequest', 'HelperService', 'API_RESOURCES', '$firebaseAuth', '$state', function ($rootScope, $scope, SS, SR, HS, AR, $firebaseAuth, state) {

@@ -57,7 +57,7 @@ const appRoutes: Routes = [
   },
   { 
     path: '**', 
-    redirectTo: '/home' 
+    redirectTo: '/user-page' 
   },
 ];
 
