@@ -141,6 +141,11 @@ export class AuthService {
         return null;
     }
 
+    resetPasswordInit(email: string): Promise<void> { 
+        let url = `${location.protocol}//${location.host}/login`;
+        return this.afAuth.auth.sendPasswordResetEmail(email, { url });
+    }
+
     private updateUserInfo(uid: string, data: any) {
 
         let user = <User> {

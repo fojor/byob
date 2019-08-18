@@ -56,6 +56,14 @@ const appRoutes: Routes = [
     loadChildren: './auth/login/login.module#LoginModule' 
   },
   { 
+    path: 'reset-password', 
+    loadChildren: './auth/reset-password/reset-password.module#ResetPasswordModule' 
+  },
+  { 
+    path: 'forgot-password', 
+    loadChildren: './auth/forgot-password/forgot-password.module#ForgotPasswordModule' 
+  },
+  { 
     path: '**', 
     redirectTo: '/user-page' 
   },
