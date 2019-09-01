@@ -7,12 +7,14 @@ import { Component, ViewChild, ElementRef, OnInit, ViewEncapsulation, OnDestroy,
         drawio, drawio > div, drawio > div > iframe {
             width: 100%;
             height: 930px;
+            padding: 0 15px;
         }    
     `],
     encapsulation: ViewEncapsulation.None
 })
-export class DrawIOComponent implements OnInit, OnDestroy {
-    private readonly WIDGET_URL = 'https://www.draw.io/?embed=1&spin=1&proto=json&configure=1';
+export class DrawIOComponent implements OnDestroy {
+    private _url = 'drawio/index.html?embed=1&spin=1&proto=json&configure=1&pv=0&sb=0';
+    //'https://www.draw.io/?embed=1&spin=1&proto=json&configure=1';
     private _data: string;
 
     @ViewChild("wrapper")
@@ -20,8 +22,13 @@ export class DrawIOComponent implements OnInit, OnDestroy {
 
     @Input()
     set data(value: string) {
-        this._data = value;
-        this.setContent(this._data);
+        if(value !== null) {
+            this._data = value;
+            if(!this.iframe) {
+                this.createIframe();
+            }
+            this.setContent(this._data);
+        }
     }
     get data() {
         return this._data;
@@ -34,10 +41,13 @@ export class DrawIOComponent implements OnInit, OnDestroy {
     onMessage = (e) => this.onMessageReceive(e);
 
 
-    ngOnInit() {
+    createIframe() {
+        if(this._data === '') {
+            this._url += "&new=1";
+        }
         this.iframe = document.createElement('iframe');
         this.iframe.setAttribute('frameborder', '0');
-        this.iframe.setAttribute('src', this.WIDGET_URL);
+        this.iframe.setAttribute('src', this._url);
         this.wrapper.nativeElement.appendChild(this.iframe);
         window.addEventListener('message', this.onMessage);
     }

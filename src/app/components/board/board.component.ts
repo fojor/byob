@@ -14,6 +14,7 @@ export class BoardComponent {
 
     docId: string;
     data$: Observable<string>;
+    isDataLoaded: boolean = true;
 
     constructor(
         private route: ActivatedRoute,
@@ -43,8 +44,10 @@ export class BoardComponent {
                             .doc('boards/' + this.docId)
                             .valueChanges()
                             .pipe(
+                                take(1),
                                 distinctUntilChanged(),
-                                map((doc: any) => doc.data),
+                                map((doc: any) => doc.data),    
+                                tap(() => console.log('loaded')),                      
                                 shareReplay(1),
                             );
                     }

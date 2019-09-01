@@ -1,12 +1,8 @@
 <blv-header></blv-header>
 
 <div class="content">
-    <div class="container">
-        <div class="row">
-            <drawio [data]="data$ | async" (update)="updateData($event)">
-            </drawio>
-        </div>
-    </div>
+    <drawio *ngIf="isDataLoaded" [data]="data$ | async" (update)="updateData($event)">
+    </drawio>
 </div>
 
 <!-- <footer> -->
