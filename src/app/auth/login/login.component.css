@@ -774,191 +774,12 @@ select.input-sm {
   margin-top: 40px;
 }
 
-
-
-/*====FOOTER==========*/
-
-.footer {
-  background-color: #051c2c;
-  padding: 50px 0 30px 0;
-}
-
-.footer p,
-.footer h5,
-.footer h6 {
-  color: #fff;
-  opacity: 0.7;
-}
-
-.footer a {
-  color: #fff;
-  opacity: 0.7;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.footer a:hover {
-  color: #0046ff;
-  opacity: 1;
-}
-
-
-
-/*========*/
-
-.topFot {
-  padding: 0 0 30px 0;
-}
-
-.topFot h5 {
-  font-size: 30px;
-  font-weight: 300;
-  margin: 0 0 10px 0;
-}
-
-.topFot .alphabt a {
-  text-transform: uppercase;
-}
-
-.topFot a {
-  margin: 0 7px;
-  font-size: 18px;
-}
-
-.btnMember {}
-
-.btnMember .btn-default {
-  font-size: 18px;
-  text-align: left;
-  color: #fff;
-  opacity: 1;
-  border-radius: 5px;
-  text-transform: uppercase;
-  background-color: #184acf;
-  padding: 12px 30px 12px 105px;
-  margin: 0;
-  position: relative;
-}
-
-.btnMember .btn-default:before {
-  background: url(/assets/img/btnbg.png)no-repeat top left;
-  content: "";
-  position: absolute;
-  top: 25px;
-  left: 27px;
-  height: 42px;
-  width: 42px;
-}
-
-.btnMember .btn-default span {
-  display: block;
-  font-size: 25px;
-}
-
-.btnMember .btn-default:hover {
-  color: #fff;
-  background-color: #002ea9;
-}
-
-
-
-/*==========*/
-
-.bottomFot {
-  padding: 28px 0 0 0;
-}
-
-.bottomFot p {
-  margin: 0;
-  line-height: 30px;
-}
-
-.bottomFot p a {
-  margin-right: 20px;
-}
-
-.bottomFot .copyright a {
-  margin: 0 20px;
-}
-
-.bottomFot .copyright {
-  margin-top: 20px;
-}
-
-.logoFotr {
-  text-align: right;
-}
-
-
-
-/*=============*/
-
-.fotMenu {
-  border-top: 1px solid #697780;
-  border-bottom: 1px solid #697780;
-}
-
-.fotMenu ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fotMenu ul li {
-  display: inline-block;
-}
-
-.fotMenu ul li a {
-  display: block;
-  margin-right: 30px;
-  text-transform: uppercase;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 48px;
-}
-
-
-
 /*==============*/
 
 @media (min-width:1200px) {
 
   .container {
     padding: 0;
-  }
-
-}
-
-@media (max-width:1199px) {
-
-
-
-  /*=============*/
-
-  .fotMenu ul li a {
-    margin-right: 10px;
-  }
-
-  .bottomFot .copyright a {
-    margin: 0 14px;
-  }
-
-  .topFot a {
-    margin: 0 2px;
-  }
-
-  .btnMember .btn-default {
-    font-size: 16px;
-    padding: 12px 30px 12px 85px;
-  }
-
-  .btnMember .btn-default span {
-    font-size: 20px;
-  }
-
-  .btnMember .btn-default:before {
-    top: 16px;
-    left: 22px;
   }
 
 }
@@ -980,70 +801,9 @@ select.input-sm {
     margin-top: 15px;
     margin-bottom: 20px;
   }
-
-  .footer {
-    padding: 30px 0 30px 0;
-    text-align: center;
-  }
-
-  .logoFotr {
-    margin-top: 20px;
-    text-align: center;
-  }
-
-  .btnMember .btn-default {
-    margin-top: 15px;
-  }
-
-  .bottomFot .copyright {
-    margin-top: 0px;
-  }
-
-  .fotMenu ul {
-    padding: 10px 0;
-  }
-
-  .fotMenu ul li a {
-    margin-right: 12px;
-    line-height: 24px;
-    font-size: 12px;
-  }
-
-  .bottomFot p {
-    font-size: 12px;
-    line-height: 24px;
-  }
-
 }
 
 @media (max-width:767px) {
-
-  .topBar {
-    padding: 15px 0;
-  }
-
-  .topBar h1 {
-    font-size: 20px;
-    padding-top: 26px;
-  }
-
-  .loginButn .btn-default {
-    font-size: 14px;
-    padding: 10px 25px;
-    margin-top: 20px;
-  }
-
-
-
-  /*===================*/
-
-  .userLogin {
-    max-width: 100%;
-    padding: 20px 40px;
-    background: rgba(255, 255, 255, 0.77);
-  }
-
-
 
   /*=============*/
 
@@ -1183,19 +943,6 @@ select.input-sm {
   .register {
     font-size: 14px;
     font-weight: 700;
-  }
-
-
-
-  /*==============*/
-
-  .topFot h5 {
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  .bottomFot .copyright a {
-    margin: 0 6px;
   }
 
 }

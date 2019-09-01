@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SlickModule } from 'ngx-slick';
 import { SocialLoginComponent } from './components/social-login/social-login.component';
 import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -16,13 +17,15 @@ import { RouterModule } from '@angular/router';
     ],
     declarations: [
         SocialLoginComponent,
-        HeaderComponent
+        HeaderComponent,
+        FooterComponent
     ],
     exports: [
         CommonModule,
         SlickModule,
         SocialLoginComponent,
-        HeaderComponent
+        HeaderComponent,
+        FooterComponent
     ],
 })
 export class SharedModule { }

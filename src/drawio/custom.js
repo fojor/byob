@@ -14,7 +14,7 @@ Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInse
                 //graph.scrollCellToVisible(select[0]);
                 graph.setSelectionCells(select);
             }
-        }, 500);
+        }, 700);
     }
     
 	
