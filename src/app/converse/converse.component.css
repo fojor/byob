@@ -1,6 +1,3 @@
-/*Подключение шрифтов*/
-@import url('https://use.fontawesome.com/releases/v5.4.1/css/all.css');
-
 /*Необходимо для адаптации крупных изображений на странице*/
 img{
 	max-width: 100%;

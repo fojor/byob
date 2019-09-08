@@ -47,7 +47,7 @@ export class BoardComponent {
                                 take(1),
                                 distinctUntilChanged(),
                                 map((doc: any) => doc.data),    
-                                tap(() => console.log('loaded')),                      
+                                //tap(() => console.log('loaded')),                      
                                 shareReplay(1),
                             );
                     }

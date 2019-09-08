@@ -70,6 +70,9 @@ export class DrawIOComponent implements OnDestroy {
                 case 'autosave':
                     this.updateData(msg.xml);
                     break;
+                case 'save':
+                    this.updateData(msg.xml);
+                    break;
             }
         }
     }
