@@ -1,0 +1,19 @@
+<div class="modal-body">
+    <div style="height: 400px; box-sizing: border-box;">
+        <file-manager 
+            [fileElements]="fileElements | async" 
+            [path]="currentPath" 
+            [canNavigateUp]="canNavigateUp"
+            (folderAdded)="addFolder($event)" 
+            (elementRemoved)="removeElement($event)"
+            (navigatedDown)="navigateToFolder($event)" 
+            (navigatedUp)="navigateUp()"
+            (elementRenamed)="renameElement($event)" 
+            (elementMoved)="moveElement($event)"></file-manager>
+    </div>
+</div>
+<div class="modal-footer">
+    <button (click)="activeModal.dismiss('Close clicked')">
+        Close
+    </button>
+</div>

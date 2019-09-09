@@ -1,4 +1,5 @@
 @import "https://fonts.googleapis.com/css?family=Montserrat:700|Raleway:300,400,500,600,700";
+@import "../authstyles.css";
 /*==========GLOBAL======================*/
 
 *:focus {
@@ -764,11 +765,11 @@ select.input-sm {
   border-radius: 2px;
 }
 
-.registration .dontHave .btn-social:first-child {
+/* .registration .dontHave .btn-social:first-child {
   border-right: 1px solid rgba(255, 255, 255, 0.2);
   width: 45px;
   top: 3px;
-}
+} */
 
 .registration .btncustom {
   margin-top: 40px;

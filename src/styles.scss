@@ -9,8 +9,10 @@
 
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~slick-carousel-latest/slick/slick.css";
-@import "assets/css/authstyles.css";
 @import "assets/css/font-awesome.min.css";
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "assets/css/material.css";
 
 
 ul {

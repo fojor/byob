@@ -4,6 +4,8 @@ import { tap, take, shareReplay, map, distinctUntilChanged } from 'rxjs/operator
 import { AngularFirestore } from '@angular/fire/firestore';
 import { StoreService } from 'src/app/chat/src/app/chat-container/store.service';
 import { Observable } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SaveDialogComponent } from './dialogs/save/save-dialog.component';
 
 @Component({
     selector: 'blv-board',
@@ -15,11 +17,13 @@ export class BoardComponent {
     docId: string;
     data$: Observable<string>;
     isDataLoaded: boolean = true;
+    fileManagerVisible: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private db: AngularFirestore,
+        private modalService: NgbModal
     ) {
         this.route.paramMap
             .pipe(
@@ -61,4 +65,14 @@ export class BoardComponent {
             .doc('boards/' + this.docId)            
             .set({ data: xml }, { merge: true })
     }
+
+    openModal() {
+        const modalRef = this.modalService.open(SaveDialogComponent, { size: 'lg', backdrop: 'static' });
+        
+        modalRef.result.then((result) => {
+          console.log(result);
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
 }
