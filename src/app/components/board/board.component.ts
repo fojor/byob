@@ -66,7 +66,7 @@ export class BoardComponent {
             .set({ data: xml }, { merge: true })
     }
 
-    openModal() {
+    saveData() {
         const modalRef = this.modalService.open(SaveDialogComponent, { size: 'lg', backdrop: 'static' });
         
         modalRef.result.then((result) => {
@@ -74,5 +74,5 @@ export class BoardComponent {
         }).catch((error) => {
           console.log(error);
         });
-      }
+    }
 }

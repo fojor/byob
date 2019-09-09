@@ -1,9 +1,10 @@
 <blv-header></blv-header>
 
 <div class="content">
-    <button (click)="openModal()">Open Modal</button>
-
-    <drawio *ngIf="isDataLoaded" [data]="data$ | async" (update)="updateData($event)">
+    <drawio *ngIf="isDataLoaded" 
+        [data]="data$ | async" 
+        (update)="updateData($event)"
+        (save)="saveData($event)">
     </drawio>
 </div>
 
