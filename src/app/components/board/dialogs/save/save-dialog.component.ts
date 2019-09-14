@@ -2,8 +2,9 @@ import { Component, Input } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Observable } from 'rxjs';
 
-import { FileElement, FileService } from '../../../../file-manager';
-
+import { FileElement } from '../../../../file-manager';
+import { FileService } from "../../services/file.service";
+import { take, tap } from "rxjs/operators";
 
 @Component({
     selector: 'save-dialog',
@@ -12,29 +13,35 @@ import { FileElement, FileService } from '../../../../file-manager';
 })
 export class SaveDialogComponent {
 
-    public fileElements: Observable<FileElement[]>;
-
-    constructor(
-        public activeModal: NgbActiveModal,
-        public fileService: FileService
-    ) { }
-
+    fileElements: Observable<FileElement[]>;
     currentRoot: FileElement;
     currentPath: string;
     canNavigateUp = false;
 
-    ngOnInit() {
-        const folderA = this.fileService.add({ name: 'Folder A', isFolder: true, parent: 'root' });
-        this.fileService.add({ name: 'Folder B', isFolder: true, parent: 'root' });
-        this.fileService.add({ name: 'Folder C', isFolder: true, parent: folderA.id });
-        this.fileService.add({ name: 'File A', isFolder: false, parent: 'root' });
-        this.fileService.add({ name: 'File B', isFolder: false, parent: 'root' });
+    @Input()
+    data: string;
 
-        this.updateFileElementQuery();
+    //@Input()
+    filename: string = '';
+
+    constructor(
+        public activeModal: NgbActiveModal,
+        private fileService: FileService,
+    ) { }
+
+
+    ngOnInit() {
+        this.fileService.load()
+            .subscribe(() => this.updateFileElementQuery());
     }
 
     addFolder(folder: { name: string }) {
-        this.fileService.add({ isFolder: true, name: folder.name, parent: this.currentRoot ? this.currentRoot.id : 'root' });
+        this.fileService.add({ 
+            isFolder: true, 
+            name: folder.name, 
+            parent: this.currentRoot ? this.currentRoot.id : 'root',
+            data: null
+        });
         this.updateFileElementQuery();
     }
 
@@ -89,5 +96,40 @@ export class SaveDialogComponent {
         split.splice(split.length - 2, 1);
         p = split.join('/');
         return p;
+    }
+
+    chooseFile(element: FileElement) {
+        this.filename = element.name;
+    }
+
+    save() {
+        this.fileElements
+            .pipe(
+                take(1),
+                tap((files) => {
+                    let selectedFile: FileElement = null;
+                    let result: any = null;
+                    if(files) {
+                        selectedFile = files.find(i => i.name === this.filename);
+                    }
+                    if(selectedFile) {
+                        result = this.fileService.update(selectedFile.id, { 
+                            data: this.data
+                        });
+                    }
+                    else {
+                        result = this.fileService.add({ 
+                            isFolder: false, 
+                            name: this.filename, 
+                            parent: this.currentRoot ? this.currentRoot.id : 'root',
+                            data: this.data
+                        });
+                    }
+                    this.activeModal.close(result);
+                })
+            ).subscribe();
+
+
+        
     }
 }

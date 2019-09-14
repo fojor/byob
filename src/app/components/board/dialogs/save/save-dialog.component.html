@@ -9,10 +9,16 @@
             (navigatedDown)="navigateToFolder($event)" 
             (navigatedUp)="navigateUp()"
             (elementRenamed)="renameElement($event)" 
-            (elementMoved)="moveElement($event)"></file-manager>
+            (elementMoved)="moveElement($event)"
+            (chooseFile)="chooseFile($event)"></file-manager>
     </div>
 </div>
 <div class="modal-footer">
+    <label for="filename">File name:</label>
+    <input type="text" id="filename" required [(ngModel)]="filename" name="filename" #name>
+    <button [disabled]="!filename.length" (click)="save()">
+        Save
+    </button>
     <button (click)="activeModal.dismiss('Close clicked')">
         Close
     </button>

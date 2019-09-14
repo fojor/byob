@@ -12,7 +12,6 @@ import { NewFolderDialogComponent } from './modals/newFolderDialog/newFolderDial
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { RenameDialogComponent } from './modals/renameDialog/renameDialog.component';
-import { FileService } from './service/file.service';
 
 @NgModule({
     imports: [
@@ -31,9 +30,6 @@ import { FileService } from './service/file.service';
         FileManagerComponent,
         NewFolderDialogComponent,
         RenameDialogComponent,
-    ],
-    providers: [
-        FileService
     ],
     exports: [FileManagerComponent],
     entryComponents: [NewFolderDialogComponent, RenameDialogComponent]

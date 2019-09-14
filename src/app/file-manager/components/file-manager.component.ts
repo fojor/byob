@@ -24,6 +24,7 @@ export class FileManagerComponent {
   @Output() navigatedDown = new EventEmitter<FileElement>();
   @Output() elementMoved = new EventEmitter<{ element: FileElement; moveTo: FileElement }>();
   @Output() navigatedUp = new EventEmitter();
+  @Output() chooseFile = new EventEmitter<FileElement>();
 
   deleteElement(element: FileElement) {
     this.elementRemoved.emit(element);
@@ -31,7 +32,10 @@ export class FileManagerComponent {
 
   navigate(element: FileElement) {
     if (element.isFolder) {
-      this.navigatedDown.emit(element);
+        this.navigatedDown.emit(element);
+    }
+    else {
+        this.chooseFile.emit(element);
     }
   }
 
