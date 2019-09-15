@@ -21,6 +21,7 @@ export class BoardComponent {
     currentUserId: string;
     currentBoard: any;
     originalFile: any;
+    revisionData: any;
     data$: Observable<string>;
     isDataLoaded: boolean = true;
     fileManagerVisible: boolean = false;
@@ -64,10 +65,10 @@ export class BoardComponent {
                                             filter((result: any) => !!result),
                                             map((result: any) => {
                                                 this.originalFile = result[board.fileId];
-                                                if(!board.revision) {
-                                                    return this.originalFile;
+                                                if(board.revision) {
+                                                    this.revisionData = result[board.revision].data;
                                                 }
-                                                return result[board.revision];
+                                                return this.originalFile;
                                             })
                                         )
                                 }),
