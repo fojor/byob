@@ -7,29 +7,51 @@ import { take, map, tap } from 'rxjs/operators';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private auth: AuthService, private router: Router) { }
+    private readonly returnUrlStorageKey = 'returnUrl';
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    
-    let expDate = this.auth.getAuthExpirationDate();
-    if(!expDate || expDate <= new Date()) {
-        this.router.navigate(['/login']);
-        return false;
-    }
-    
-    if (this.auth.authenticated) { 
-        return true; 
-    }
+    constructor(private auth: AuthService, private router: Router) { }
 
-    return this.auth.currentUserObservable
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+
+        const targetUrl = state.url;
+
+        let expDate = this.auth.getAuthExpirationDate();
+        if (!expDate || expDate <= new Date()) {
+            this.goToLogin(targetUrl);
+            return false;
+        }
+
+        if (this.auth.authenticated) {
+            return true;
+        }
+
+        return this.auth.currentUserObservable
             .pipe(
                 take(1),
-                map(user => !!user),
-                tap(loggedIn => {
-                    if (!loggedIn) {
-                      this.router.navigate(['/login']);
+                map(user => {
+                    if (user) {
+                        return !this.hasReturnUrl();
                     }
+                    this.goToLogin(targetUrl);
+                    return false;
                 })
             )
+    }
+
+    private hasReturnUrl(): boolean {
+        let returnUrl: string = localStorage.getItem(this.returnUrlStorageKey);
+        if (returnUrl) {
+            localStorage.removeItem(this.returnUrlStorageKey)
+            this.router.navigate([returnUrl]);
+            return true;
+        }
+        return false;
+    }
+
+    private goToLogin(returnUrl: string) {
+        if (returnUrl) {
+            localStorage.setItem(this.returnUrlStorageKey, returnUrl);
+            this.router.navigate(['/login']);
+        }
     }
 }
