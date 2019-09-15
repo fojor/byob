@@ -34,6 +34,9 @@ export class DrawIOComponent implements OnDestroy {
         return this._data;
     }
 
+    @Input()
+    revision: string;
+
     @Output()
     update: EventEmitter<string> = new EventEmitter<string>();
 
@@ -69,6 +72,9 @@ export class DrawIOComponent implements OnDestroy {
                     break;
                 case 'init':
                     this.setContent(this.data);
+                    if(this.revision) {
+                        this.updateContent(this.revision);
+                    }
                     break;
                 case 'autosave':
                     this.updateData(msg.xml);
@@ -104,6 +110,13 @@ export class DrawIOComponent implements OnDestroy {
             config: {
                 css: '[title="Save (Cmd+S)"], [title="Save (Ctrl+S)"], [title="Exit"] { display: none }'
             }
+        }), '*');
+    }
+
+    private updateContent(content: string) {
+        this.iframe.contentWindow.postMessage(JSON.stringify({
+            action: 'export',
+            xml: content
         }), '*');
     }
 
