@@ -23,7 +23,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   { 
-    path: 'board', 
+    path: 'flowchart', 
     loadChildren: './components/board/board.module#BoardModule',
     canActivate: [AuthGuard]
   },

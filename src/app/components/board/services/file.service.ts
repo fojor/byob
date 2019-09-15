@@ -5,8 +5,9 @@ import { FileElement } from '../../../file-manager/model/element';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { tap, take, filter, combineAll, map, switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
+import { tap, take, filter, combineAll, map, switchMap } from 'rxjs/operators';
 
 export interface IFileService {
     add(fileElement: FileElement);
@@ -38,7 +39,9 @@ export class FileService implements IFileService {
                             tap((snapshot: firebase.firestore.DocumentSnapshot) => {
                                 let data = snapshot.data();
                                 if(data && !this.map.keys.length) {
-                                    data.files.forEach(i => this.map.set(i.id, i))
+                                    Object.keys(data).forEach(key => {
+                                        this.map.set(key, data[key])
+                                    })
                                 }
                             })
                         )
@@ -49,26 +52,29 @@ export class FileService implements IFileService {
     add(fileElement: FileElement) {
         fileElement.id = v4();
         this.map.set(fileElement.id, this.clone(fileElement));
-        this.updateDatabase();
+            this.updateDatabase(fileElement.id, fileElement, this.currentUserId);
         return {
             fileId: fileElement.id,
-            ownerId: this.currentUserId
+            ownerId: this.currentUserId,
+            fileName: fileElement.name
         };
     }
 
     delete(id: string) {
         this.map.delete(id);
-        this.updateDatabase();
+        let update = firebase.firestore.FieldValue.delete();
+        this.updateDatabase(id, update, this.currentUserId);
     }
 
     update(id: string, update: Partial<FileElement>) {
         let element = this.map.get(id);
         element = Object.assign(element, update);
         this.map.set(element.id, element);
-        this.updateDatabase();
+        this.updateDatabase(id, update, this.currentUserId);
         return {
             fileId: id,
-            ownerId: this.currentUserId
+            ownerId: this.currentUserId,
+            fileName: element.name
         };
     }
 
@@ -96,9 +102,21 @@ export class FileService implements IFileService {
         return JSON.parse(JSON.stringify(element));
     }
 
-    updateDatabase() {
-        this.db.doc('files/' + this.currentUserId).set({
-            files: [ ...Array.from(this.map.values()) ]
-        });
+    updateDatabase(fileId: string, data: any, userId: string) {
+        this.db
+            .doc('files/' + userId)
+            .set({
+                [fileId]: data
+            }, { merge: true });
+    }
+
+    addRevision(fileElement: FileElement, userId: string) {
+        let id = v4();
+        this.updateDatabase(id, fileElement, userId);
+        return {
+            fileId: id,
+            ownerId: userId,
+            fileName: fileElement.name
+        };
     }
 }
