@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { tap, take, shareReplay, map, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
+import { ActivatedRoute, ParamMap, Router, NavigationError, NavigationExtras } from '@angular/router';
+import { tap, take, shareReplay, map, distinctUntilChanged, switchMap, filter, first } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, pipe, of } from 'rxjs';
@@ -21,7 +21,7 @@ export class BoardComponent {
     currentUserId: string;
     currentBoard: any;
     originalFile: any;
-    revisionData: any;
+    revisionFile: any;
     data$: Observable<string>;
     isDataLoaded: boolean = true;
     fileManagerVisible: boolean = false;
@@ -55,7 +55,6 @@ export class BoardComponent {
                                 take(1),
                                 tap((board: any) => {
                                     this.currentBoard = board;
-                                    console.log(board);
                                 }),
                                 switchMap((board: any) => {
                                     return this.db
@@ -66,7 +65,7 @@ export class BoardComponent {
                                             map((result: any) => {
                                                 this.originalFile = result[board.fileId];
                                                 if(board.revision) {
-                                                    this.revisionData = result[board.revision].data;
+                                                    this.revisionFile = result[board.revision];
                                                 }
                                                 return this.originalFile;
                                             })
@@ -91,15 +90,55 @@ export class BoardComponent {
         //     .set({ data: xml }, { merge: true })
     }
 
+    openFile() {
+        const modalRef = this.modalService.open(SaveDialogComponent, { size: 'lg', backdrop: 'static' });
+
+        modalRef.result.then((result) => {
+            this.db.collection<any>('boards', ref => ref.where('fileId', '==', `${result.id}`).limit(1))
+                .get()
+                .pipe(
+                    take(1),
+                    tap((snapshot) => {
+                        if (!snapshot.docs.length) {
+                                this.db.collection<any>('boards', ref => ref.where('revision', '==', `${result.id}`).limit(1))
+                                    .get()
+                                    .pipe(
+                                        take(1),
+                                        tap((snapshot2) => {
+                                            if (snapshot2.docs.length) {
+                                                const board2 = snapshot2.docs[0];
+                                                location.href = 'flowchart/' + board2.id;
+                                            }
+                                        })
+                                    ).subscribe();
+                        }
+                        else {
+                            const board = snapshot.docs[0];
+                            location.href = 'flowchart/' + board.id;
+                        }
+                    })
+                ).subscribe();
+
+        }).catch((error) => {
+            //this.showToastError(error);
+        });
+    }
+
     saveData(xml: string) {
 
         if (this.boardId && this.currentUserId !== this.currentBoard.ownerId) {
-            let result = this.fileService.addRevision({ 
-                isFolder: false, 
-                name: `${this.currentBoard.fileName}_revision1`, 
-                parent: this.originalFile.parent,
-                data: xml
-            }, this.currentBoard.ownerId);
+            let result;
+            if(!this.revisionFile) {
+                result = this.fileService.addRevision({ 
+                    isFolder: false, 
+                    name: `${this.currentBoard.fileName}_revision1`, 
+                    parent: this.originalFile.parent,
+                    data: xml
+                }, this.currentBoard.ownerId);
+            }
+            else {
+                result = this.fileService.update(this.revisionFile.id, { data: xml })
+            }
 
             let update = { ...this.currentBoard };
             update.revision = result.fileId;
@@ -115,28 +154,40 @@ export class BoardComponent {
             //modalRef.componentInstance.filename = this.filename;
 
             modalRef.result.then((result) => {
-                if (this.boardId) {
-                    this.db
-                        .doc('boards/' + this.boardId)
-                        .set(result)
-                        .then(() => this.showToastAfterSave(result.fileName))
-                }
-                else {
+                if (!this.boardId || result.fileName !== this.originalFile.name) {
                     this.db
                         .collection('boards')
                         .add(result)
                         .then((doc) => {
-                            this.router.navigate(['flowchart/' + doc.id])
+                            this.router.navigate(['flowchart/' + doc.id]);
+                            this.showToastAfterSave(result.fileName);
+                        })
+                }
+                else {
+                    this.db
+                        .doc('boards/' + this.boardId)
+                        .set(result)
+                        .then(() => {
+                            if(this.revisionFile) {
+                                this.fileService.delete(this.revisionFile.id);
+                            }
+                            this.showToastAfterSave(result.fileName)
                         })
                 }
 
             }).catch((error) => {
-                //console.log(error);
+                //this.showToastError(error);
             });
         }
     }
 
     showToastAfterSave(filename: string) {
         this.toastr.success(`File <b>${filename}</b> saved successfully`);
+    }
+
+    showToastError(message) {
+        if(message) {
+            this.toastr.error(message);
+        }
     }
 }

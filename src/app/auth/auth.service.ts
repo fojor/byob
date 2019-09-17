@@ -8,17 +8,11 @@ import { User } from '../shared/models/user';
 @Injectable()
 export class AuthService {
 
-  private isLoggedIn = false;
-
     constructor(
         private afAuth: AngularFireAuth, 
         //private db: AngularFireDatabase,
         private db: AngularFirestore,
     ) { }
-
-    get authenticated(): boolean {
-        return this.isLoggedIn;
-    }
 
     get currentUserObservable(): Observable<firebase.User> {
         return this.afAuth.authState;
@@ -38,7 +32,6 @@ export class AuthService {
                 .signInWithEmailAndPassword(email, password)
                 .then(() => {
                     this.prolongAuth();
-                    this.isLoggedIn = true;
                 })
     }
 
@@ -46,7 +39,6 @@ export class AuthService {
         return this.afAuth.auth
                 .signOut()
                 .then(() => {
-                    this.isLoggedIn = false;
                 })       
     }
 

@@ -21,10 +21,6 @@ export class AuthGuard implements CanActivate {
             return false;
         }
 
-        if (this.auth.authenticated) {
-            return true;
-        }
-
         return this.auth.currentUserObservable
             .pipe(
                 take(1),

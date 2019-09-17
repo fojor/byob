@@ -111,10 +111,10 @@ export class FileService implements IFileService {
     }
 
     addRevision(fileElement: FileElement, userId: string) {
-        let id = v4();
-        this.updateDatabase(id, fileElement, userId);
+        fileElement.id = v4();
+        this.updateDatabase(fileElement.id, fileElement, userId);
         return {
-            fileId: id,
+            fileId: fileElement.id,
             ownerId: userId,
             fileName: fileElement.name
         };

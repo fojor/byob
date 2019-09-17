@@ -1,17 +1,56 @@
-// var editorUiInit = EditorUi.prototype.init;
-// EditorUi.prototype.init = function()
-// {
-//     editorUiInit.apply(this, arguments);
+var editorUiInit = EditorUi.prototype.init;
+EditorUi.prototype.init = function()
+{
+    editorUiInit.apply(this, arguments);
 
-//     setTimeout(() => {
-//         var div = document.createElement('div');
-//         div.innerText = "TEST";
-//         var ok = () => alert('ok');
-//         var cnl = () => alert('cancel');
-    
-//         var dlg = new CustomDialog(this, div, ok, cnl, 'oki', null); 
-//     }, 2000);
-// }
+    var langElm = document.querySelector('a[title="Language"]');
+    if(langElm) {
+        langElm.style.display = 'none';
+    }
+
+    var mutationObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if(mutation && mutation.addedNodes && mutation.addedNodes.length && mutation.addedNodes[0].className === 'mxPopupMenu geMenubarMenu') {
+                var tr = document.createElement('tr');
+                tr.className = 'mxPopupMenuItem file-open-item';
+                var td1 = document.createElement('td');
+                td1.className = 'mxPopupMenuIcon';
+                tr.appendChild(td1);
+                var td2 = document.createElement('td');
+                td2.className = 'mxPopupMenuItem';
+                td2.innerText = 'Open';
+                tr.appendChild(td2);
+                var td3 = document.createElement('td');
+                td3.className = 'mxPopupMenuItem';
+                tr.appendChild(td3);
+
+                var firstItem = document.querySelector('.mxPopupMenu.geMenubarMenu tr.mxPopupMenuItem:nth-child(1)');
+                if(firstItem && firstItem.innerText.trim() === 'Import from')
+                var parent = firstItem.parentNode;
+                if(parent) {
+                    parent.insertBefore(tr, firstItem);
+                }
+
+                mxEvent.addGestureListeners(tr, mxUtils.bind(this, function(evt)
+                {
+                    var op = window.opener || window.parent;
+                    op.postMessage(JSON.stringify({event: 'open'}), '*');
+                    //mxEvent.consume(evt);
+                }));
+
+            }
+        });
+    });
+
+    mutationObserver.observe(document.documentElement, {
+        //attributes: true,
+        //characterData: true,
+        childList: true,
+        subtree: true,
+        //attributeOldValue: true,
+        //characterDataOldValue: true
+    });
+}
 
 Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInserted, bounds)
 {

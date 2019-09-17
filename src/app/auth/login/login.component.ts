@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid) {
         this.authService
             .logIn(this.username.value, this.password.value)
+            .then(() => this.router.navigate(['/user-page']))
             .catch(err => this.serverError = err)
     }
-    this.router.navigate(['/user-page']);
   }
 
     onSocialLoginError(msg) {

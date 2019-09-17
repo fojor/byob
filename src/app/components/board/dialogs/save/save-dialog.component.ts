@@ -46,6 +46,8 @@ export class SaveDialogComponent {
     }
 
     removeElement(element: FileElement) {
+        console.log(element);
+
         this.fileService.delete(element.id);
         this.updateFileElementQuery();
     }
@@ -102,6 +104,22 @@ export class SaveDialogComponent {
         this.filename = element.name;
     }
 
+    open() {
+        this.fileElements
+            .pipe(
+                take(1),
+                tap((files) => {
+                    let result = files.find(i => i.name === this.filename);
+                    if(result) {
+                        this.activeModal.close(result);
+                    }
+                    else {
+                        this.activeModal.dismiss('File not found');
+                    }
+                })
+            ).subscribe();     
+    }
+
     save() {
         this.fileElements
             .pipe(
@@ -128,8 +146,5 @@ export class SaveDialogComponent {
                     this.activeModal.close(result);
                 })
             ).subscribe();
-
-
-        
     }
 }

@@ -3,9 +3,10 @@
 <div class="content">
     <drawio *ngIf="isDataLoaded" 
         [data]="data$ | async" 
-        [revision]="revisionData"
+        [revision]="revisionFile?.data"
         (update)="updateData($event)"
-        (save)="saveData($event)">
+        (save)="saveData($event)"
+        (open)="openFile($event)">
     </drawio>
 </div>
 
