@@ -1,13 +1,33 @@
+
+var actionsInit = Actions.prototype.init;
+Actions.prototype.init = function()
+{
+    actionsInit.apply(this, arguments); 
+
+    setTimeout(() => {
+        //disable grid by default
+        this.get('grid').funct();
+    }, 200);
+}
+
 var editorUiInit = EditorUi.prototype.init;
 EditorUi.prototype.init = function()
 {
     editorUiInit.apply(this, arguments);
 
+    //Hide languages button
     var langElm = document.querySelector('a[title="Language"]');
     if(langElm) {
         langElm.style.display = 'none';
     }
 
+    //Make LEARN menu label bold
+    var menuElements = document.querySelectorAll('.geMenubar .geItem:not(.geStatus)');
+    if(menuElements) {
+        menuElements[menuElements.length - 1].style.fontWeight = "bold";
+    }
+
+    //Create "Open" and "Share" items in File menu
     var mutationObserver = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if(mutation && mutation.addedNodes && mutation.addedNodes.length && mutation.addedNodes[0].className === 'mxPopupMenu geMenubarMenu') {
@@ -25,19 +45,48 @@ EditorUi.prototype.init = function()
                 tr.appendChild(td3);
 
                 var firstItem = document.querySelector('.mxPopupMenu.geMenubarMenu tr.mxPopupMenuItem:nth-child(1)');
-                if(firstItem && firstItem.innerText.trim() === 'Import from')
-                var parent = firstItem.parentNode;
-                if(parent) {
-                    parent.insertBefore(tr, firstItem);
-                }
+                if(firstItem && firstItem.innerText.trim() === 'Import from') {
+                    var parent = firstItem.parentNode;
+                    if(parent) {
+                        parent.insertBefore(tr, firstItem);
+                    }
+    
+                    mxEvent.addGestureListeners(tr, mxUtils.bind(this, function(evt)
+                    {
+                        var op = window.opener || window.parent;
+                        op.postMessage(JSON.stringify({event: 'open'}), '*');
+                        //mxEvent.consume(evt);
+                    }));    
+                }        
 
-                mxEvent.addGestureListeners(tr, mxUtils.bind(this, function(evt)
-                {
-                    var op = window.opener || window.parent;
-                    op.postMessage(JSON.stringify({event: 'open'}), '*');
-                    //mxEvent.consume(evt);
-                }));
 
+                var tr = document.createElement('tr');
+                tr.className = 'mxPopupMenuItem file-open-item';
+                var td1 = document.createElement('td');
+                td1.className = 'mxPopupMenuIcon';
+                tr.appendChild(td1);
+                var td2 = document.createElement('td');
+                td2.className = 'mxPopupMenuItem';
+                td2.innerText = 'Share';
+                tr.appendChild(td2);
+                var td3 = document.createElement('td');
+                td3.className = 'mxPopupMenuItem';
+                tr.appendChild(td3);
+
+                var firstItem = document.querySelector('.mxPopupMenu.geMenubarMenu tr.mxPopupMenuItem:nth-child(2)');
+                if(firstItem && firstItem.innerText.trim() === 'Import from') {
+                    var parent = firstItem.parentNode;
+                    if(parent) {
+                        parent.insertBefore(tr, firstItem);
+                    }
+    
+                    mxEvent.addGestureListeners(tr, mxUtils.bind(this, function(evt)
+                    {
+                        var op = window.opener || window.parent;
+                        op.postMessage(JSON.stringify({event: 'share'}), '*');
+                        //mxEvent.consume(evt);
+                    }));    
+                }        
             }
         });
     });
@@ -51,6 +100,19 @@ EditorUi.prototype.init = function()
         //characterDataOldValue: true
     });
 }
+
+var createMenubar = Menus.prototype.createMenubar;
+Menus.prototype.createMenubar = function(container)
+{
+    var menubar = createMenubar.apply(this, arguments);	
+    menubar.addMenu("LEARN", mxUtils.bind(this, function()
+    {
+        window.open('https://youtube.com', '_blank');
+    }));
+
+	return menubar;
+};
+
 
 Sidebar.prototype.createDropHandler = function(cells, allowSplit, allowCellsInserted, bounds)
 {

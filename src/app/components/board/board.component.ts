@@ -124,6 +124,10 @@ export class BoardComponent {
         });
     }
 
+    shareFile() {
+        const modalRef = this.modalService.open(SaveDialogComponent, { size: 'lg', backdrop: 'static' });
+    }
+
     saveData(xml: string) {
 
         if (this.boardId && this.currentUserId !== this.currentBoard.ownerId) {

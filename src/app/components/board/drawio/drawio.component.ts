@@ -46,6 +46,9 @@ export class DrawIOComponent implements OnDestroy {
     @Output()
     open: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    share: EventEmitter<any> = new EventEmitter<any>();
+
     iframe: any;
     onMessage = (e) => this.onMessageReceive(e);
 
@@ -84,6 +87,9 @@ export class DrawIOComponent implements OnDestroy {
                     break;
                 case 'open':
                     this.openFile();
+                    break;
+                case 'share':
+                    this.shareFile();
                     break;
                 case 'save':
                     this.saveData(msg.xml);
@@ -131,6 +137,10 @@ export class DrawIOComponent implements OnDestroy {
     }
 
     private openFile() {
+        this.open.emit();
+    }
+
+    private shareFile() {
         this.open.emit();
     }
 
