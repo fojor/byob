@@ -141,7 +141,7 @@ export class DrawIOComponent implements OnDestroy {
     }
 
     private shareFile() {
-        this.open.emit();
+        this.share.emit();
     }
 
     private saveData(value: string) {

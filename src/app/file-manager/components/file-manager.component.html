@@ -15,8 +15,11 @@
                     (contextmenu)="openMenu($event,element, menuTrigger)">
                     <mat-icon color="primary" class="file-or-folder-icon pointer" *ngIf="element.isFolder">folder
                     </mat-icon>
-                    <mat-icon color="primary" class="file-or-folder-icon pointer" *ngIf="!element.isFolder">
-                        insert_drive_file</mat-icon>
+                    <mat-icon color="primary" class="file-or-folder-icon pointer" 
+                        *ngIf="!element.isFolder"
+                        [ngClass]="{ 'selected': isSelected(element) }">
+                        insert_drive_file
+                    </mat-icon>
                     <span>{{element.name}}</span>
                 </div>
             </mat-grid-tile>

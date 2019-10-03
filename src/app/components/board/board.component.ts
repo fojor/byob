@@ -7,8 +7,9 @@ import { Observable, pipe, of } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
-import { SaveDialogComponent } from './dialogs/save/save-dialog.component';
 import { FileService } from './services/file.service';
+import { SaveDialogComponent } from './dialogs/save/save-dialog.component';
+import { ShareDialogComponent } from './dialogs/share/share-dialog.component';
 
 @Component({
     selector: 'blv-board',
@@ -125,7 +126,7 @@ export class BoardComponent {
     }
 
     shareFile() {
-        const modalRef = this.modalService.open(SaveDialogComponent, { size: 'lg', backdrop: 'static' });
+        const modalRef = this.modalService.open(ShareDialogComponent, { size: 'lg', backdrop: 'static' });
     }
 
     saveData(xml: string) {

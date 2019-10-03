@@ -25,6 +25,10 @@
   font-size: 50px;
 }
 
+.file-or-folder-icon.selected {
+    opacity: 0.5;
+}
+
 .pointer {
   cursor: pointer;
 }

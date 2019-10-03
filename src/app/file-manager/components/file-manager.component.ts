@@ -17,6 +17,7 @@ export class FileManagerComponent {
   @Input() fileElements: FileElement[];
   @Input() canNavigateUp: string;
   @Input() path: string;
+  @Input() selectedFiles: FileElement[];
 
   @Output() folderAdded = new EventEmitter<{ name: string }>();
   @Output() elementRemoved = new EventEmitter<FileElement>();
@@ -69,5 +70,9 @@ export class FileManagerComponent {
   openMenu(event: MouseEvent, element: FileElement, viewChild: MatMenuTrigger) {
     event.preventDefault();
     viewChild.openMenu();
+  }
+
+  isSelected(element: FileElement) {
+    return this.selectedFiles.some(i => i.id === element.id);
   }
 }

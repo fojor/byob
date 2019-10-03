@@ -11,6 +11,8 @@ import { FileManagerModule } from '../../file-manager/file-manager.module'
 import { DrawIOComponent } from './drawio/drawio.component';
 import { BoardComponent } from './board.component';
 import { SaveDialogComponent } from './dialogs/save/save-dialog.component';
+import { ShareDialogComponent } from './dialogs/share/share-dialog.component';
+
 import { FileService } from './services/file.service';
 
 @NgModule({
@@ -29,7 +31,8 @@ import { FileService } from './services/file.service';
     declarations: [
         BoardComponent,
         DrawIOComponent,
-        SaveDialogComponent
+        SaveDialogComponent,
+        ShareDialogComponent
     ],
     exports: [
         BoardComponent
@@ -38,7 +41,8 @@ import { FileService } from './services/file.service';
         FileService
     ],
     entryComponents: [
-        SaveDialogComponent
+        SaveDialogComponent,
+        ShareDialogComponent
     ]
 })
 export class BoardModule { }
