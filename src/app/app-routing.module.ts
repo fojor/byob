@@ -1,11 +1,34 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule, Injectable } from '@angular/core';
+import { Routes, RouterModule, Router, Resolve } from '@angular/router';
 import { AuthGuard } from './auth/auth-guard';
+import { AuthService } from './auth/auth.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { take, map } from 'rxjs/operators';
+
+
+@Injectable({ providedIn: 'root' })
+export class HomeResolver implements Resolve<any> {
+  constructor(private auth: AuthService, private router: Router) {}
+  resolve(): Observable<any>|Promise<any>|any {
+        return this.auth.currentUserObservable
+            .pipe(
+                take(1),
+                map(user => {
+                    if (user) {
+                        return this.router.navigate(['/user-page'])
+                    }
+                })
+            )
+  }
+}
 
 const appRoutes: Routes = [
   { 
-    path: 'home', 
-    loadChildren: './components/home/home.module#HomeModule'
+    path: '', 
+    loadChildren: './components/home/home.module#HomeModule',
+    resolve: {
+        HomeResolver
+    },
   },
   {
     path: 'chat-room',
