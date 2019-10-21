@@ -9,7 +9,7 @@
     <hr />
     <div class="contacts-container">
         <div class="contacts-item" 
-            *ngFor="let user of contacts | async"
+            *ngFor="let user of contacts"
             (click)="selectContact(user)"
             [ngClass]="{'selected': isContactSelected(user) }">
             <div class="contacts-icon">

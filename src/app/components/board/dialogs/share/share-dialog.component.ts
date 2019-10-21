@@ -5,8 +5,9 @@ import { Observable, of } from 'rxjs';
 import { FileElement } from '../../../../file-manager';
 import { FileService } from "../../services/file.service";
 import { StoreService } from '../../../../chat/src/app/chat-container/store.service';
-import { tap, switchMap } from "rxjs/operators";
+import { tap, switchMap, take } from "rxjs/operators";
 import { User } from "src/app/shared/models/user";
+import { PubnubService } from "src/app/chat/src/app/chat-container/pubnub.service";
 
 @Component({
     selector: 'share-dialog',
@@ -21,24 +22,21 @@ export class ShareDialogComponent {
     canNavigateUp = false;
     selectedFiles: FileElement[] = [];
     selectedUsers: User[] = [];
-    contacts: Observable<any>;
 
     @Input()
-    data: string;
+    contacts: User[] = [];
 
     //@Input()
-    filename: string = '';
+    //data: string;
+
+    //@Input()
+    //filename: string = '';
 
     constructor(
         public activeModal: NgbActiveModal,
         private fileService: FileService,
-        private storeService: StoreService
     ) { 
-        this.contacts = this.storeService.getCurrentUser()
-            .pipe(
-                switchMap(() => this.storeService.getSavedContacts()),
-                switchMap(() => of(this.storeService.saved))
-            );
+
     }
 
 
@@ -135,8 +133,12 @@ export class ShareDialogComponent {
     }
 
     share() {
-        if(this.selectedFiles.length) {
-            //this.activeModal.close(result);
+        if(this.selectedFiles.length && this.selectedUsers.length) {
+           
+            this.activeModal.close({
+                files: this.selectedFiles,
+                users: this.selectedUsers
+            });
         }
     }
 }

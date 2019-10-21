@@ -13,7 +13,7 @@ import { Component, ViewChild, ElementRef, OnInit, ViewEncapsulation, OnDestroy,
     encapsulation: ViewEncapsulation.None
 })
 export class DrawIOComponent implements OnDestroy {
-    private _url = 'drawio/index.html?embed=1&spin=1&proto=json&configure=1&pv=0&sb=0&vrs=3';
+    private _url = 'drawio/index.html?embed=1&spin=1&proto=json&configure=1&pv=0&sb=0&vrs=4';
     //'https://www.draw.io/?embed=1&spin=1&proto=json&configure=1';
     private _data: string;
 

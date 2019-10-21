@@ -73,6 +73,6 @@ export class FileManagerComponent {
   }
 
   isSelected(element: FileElement) {
-    return this.selectedFiles.some(i => i.id === element.id);
+    return this.selectedFiles && this.selectedFiles.some(i => i.id === element.id);
   }
 }

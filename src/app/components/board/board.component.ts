@@ -10,6 +10,10 @@ import { ToastrService } from 'ngx-toastr';
 import { FileService } from './services/file.service';
 import { SaveDialogComponent } from './dialogs/save/save-dialog.component';
 import { ShareDialogComponent } from './dialogs/share/share-dialog.component';
+import { StoreService } from 'src/app/chat/src/app/chat-container/store.service';
+import { FileElement } from 'src/app/file-manager';
+import { User } from 'src/app/shared';
+import { PubnubService } from 'src/app/chat/src/app/chat-container/pubnub.service';
 
 @Component({
     selector: 'blv-board',
@@ -34,7 +38,9 @@ export class BoardComponent {
         private modalService: NgbModal,
         private toastr: ToastrService,
         private afAuth: AngularFireAuth,
-        private fileService: FileService
+        private fileService: FileService,
+        private storeService: StoreService,
+        private pubnub: PubnubService
     ) {
         this.afAuth.authState
             .pipe(
@@ -93,40 +99,48 @@ export class BoardComponent {
 
     openFile() {
         const modalRef = this.modalService.open(SaveDialogComponent, { size: 'lg', backdrop: 'static' });
-
+        modalRef.componentInstance.contacts
         modalRef.result.then((result) => {
-            this.db.collection<any>('boards', ref => ref.where('fileId', '==', `${result.id}`).limit(1))
-                .get()
-                .pipe(
-                    take(1),
-                    tap((snapshot) => {
-                        if (!snapshot.docs.length) {
-                                this.db.collection<any>('boards', ref => ref.where('revision', '==', `${result.id}`).limit(1))
-                                    .get()
-                                    .pipe(
-                                        take(1),
-                                        tap((snapshot2) => {
-                                            if (snapshot2.docs.length) {
-                                                const board2 = snapshot2.docs[0];
-                                                location.href = 'flowchart/' + board2.id;
-                                            }
-                                        })
-                                    ).subscribe();
-                        }
-                        else {
-                            const board = snapshot.docs[0];
-                            location.href = 'flowchart/' + board.id;
-                        }
-                    })
-                ).subscribe();
-
-        }).catch((error) => {
+            this.getBoardByFileId(result.id)
+                .then(boardId => location.href = 'flowchart/' + boardId);
+        })
+        .catch((error) => {
             //this.showToastError(error);
         });
     }
 
     shareFile() {
-        const modalRef = this.modalService.open(ShareDialogComponent, { size: 'lg', backdrop: 'static' });
+
+        this.storeService.init()
+            .toPromise()
+            .then(() => {
+                const modalRef = this.modalService.open(ShareDialogComponent, { size: 'lg', backdrop: 'static' });
+                modalRef.componentInstance.contacts = this.storeService.saved;
+                modalRef.result.then(async (result: { files: FileElement[], users: User[]}) => {
+
+                    let message = {
+                        text: '',
+                        timestamp: (new Date()).getTime(),
+                        sender: this.currentUserId,
+                    };
+                    for(let i =0; i < result.files.length; i++) {
+                        let boardId = await this.getBoardByFileId(result.files[i].id);
+                        message.text += location.origin + '/flowchart/' + boardId + "\n";
+                    }
+                    result.users.forEach(user => {
+                        let chats = this.storeService.chats
+                                        .filter(i => i.participants.includes(user.id))
+                                        .sort(this.storeService.sortByLastUpdate)
+                                        .slice(0,1);
+                        if(chats.length) {
+                            this.pubnub.publish(chats[0].channel, message);
+                        }
+                    });
+                    this.showToastAfterShare();
+                })
+                .catch((error) => {
+                });
+            });
     }
 
     saveData(xml: string) {
@@ -190,9 +204,36 @@ export class BoardComponent {
         this.toastr.success(`File <b>${filename}</b> saved successfully`);
     }
 
+    showToastAfterShare() {
+        this.toastr.success(`Files shared successfully`);
+    }
+
     showToastError(message) {
         if(message) {
             this.toastr.error(message);
         }
+    }
+
+    private getBoardByFileId(fileId): Promise<any> {
+        return this.db.collection<any>('boards', ref => ref.where('fileId', '==', `${fileId}`).limit(1))
+                .get()
+                .toPromise()
+                .then(snapshot => {
+                    if (!snapshot.docs.length) {
+                        return this.db.collection<any>('boards', ref => ref.where('revision', '==', `${fileId}`).limit(1))
+                            .get()
+                            .toPromise()
+                            .then(snapshot2 => {
+                                if (snapshot2.docs.length) {
+                                    const board2 = snapshot2.docs[0];
+                                    return board2.id;
+                                }
+                            })
+                    }
+                    else {
+                        const board = snapshot.docs[0];
+                        return board.id;
+                    }
+                })
     }
 }
