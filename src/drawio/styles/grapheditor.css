@@ -351,8 +351,23 @@ div.mxWindow .geButton {
 }
 .geTabContainer {
 	border-top:1px solid #e5e5e5;
-	background-color:#f1f3f4;
+    background-color:#f1f3f4;
+    padding-top: 5px;
 }
+.geTabContainer > div > div {
+    border-style: none!important;
+    background-color:#fff!important;
+    padding: 0 !important;
+    margin: 0 4px !important;
+}
+.geTabContainer > div > div.insert-tab {
+    background-color:#ddd!important;
+
+}
+.geTabContainer > div > div.geInactivePage {
+    opacity: 0.6;
+}
+
 .geSidebar {
 	border-bottom:1px solid #e5e5e5;
 	padding:6px;
