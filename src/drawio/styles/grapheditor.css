@@ -365,7 +365,7 @@ div.mxWindow .geButton {
 
 }
 .geTabContainer > div > div.geInactivePage {
-    opacity: 0.6;
+    opacity: 0.4;
 }
 
 .geSidebar {
