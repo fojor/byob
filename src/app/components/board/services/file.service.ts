@@ -24,7 +24,7 @@ export class FileService implements IFileService {
 
     constructor(
         private db: AngularFirestore,
-        private afAuth: AngularFireAuth, 
+        private afAuth: AngularFireAuth,
     ) { }
 
     load(): Observable<any> {
@@ -34,11 +34,11 @@ export class FileService implements IFileService {
                 tap(i => this.currentUserId = i),
                 take(1),
                 switchMap(() => {
-                    return this.db.doc('files/' + this.currentUserId).get()                   
-                        .pipe(                            
+                    return this.db.doc('files/' + this.currentUserId).get()
+                        .pipe(
                             tap((snapshot: firebase.firestore.DocumentSnapshot) => {
                                 let data = snapshot.data();
-                                if(data && !this.map.keys.length) {
+                                if (data && !this.map.keys.length) {
                                     Object.keys(data).forEach(key => {
                                         this.map.set(key, data[key])
                                     })
@@ -52,7 +52,7 @@ export class FileService implements IFileService {
     add(fileElement: FileElement) {
         fileElement.id = v4();
         this.map.set(fileElement.id, this.clone(fileElement));
-            this.updateDatabase(fileElement.id, fileElement, this.currentUserId);
+        this.updateDatabase(fileElement.id, fileElement, this.currentUserId);
         return {
             fileId: fileElement.id,
             ownerId: this.currentUserId,

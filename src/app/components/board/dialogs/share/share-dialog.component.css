@@ -1,6 +1,7 @@
 .contacts-container {
-    overflow-x: auto;
-    white-space: nowrap;
+    overflow-y: auto;
+    height: 400px;
+    padding: 30px;
 }
 
 .contacts-item {

@@ -22,7 +22,7 @@ import { PubnubService } from 'src/app/chat/src/app/chat-container/pubnub.servic
 })
 export class BoardComponent {
 
-    boardId: string;
+    docId: string;
     currentUserId: string;
     currentBoard: any;
     originalFile: any;
@@ -53,38 +53,35 @@ export class BoardComponent {
             .pipe(
                 take(1),
                 tap((params: ParamMap) => {
-                    this.boardId = params.get('id');
-                    if (this.boardId) {
-                        this.data$ = this.db
-                            .doc('boards/' + this.boardId)
-                            .valueChanges()
-                            .pipe(
-                                take(1),
-                                tap((board: any) => {
-                                    this.currentBoard = board;
-                                }),
-                                switchMap((board: any) => {
-                                    return this.db
-                                        .doc('files/' + board.ownerId)
-                                        .valueChanges()
-                                        .pipe(
-                                            filter((result: any) => !!result),
-                                            map((result: any) => {
-                                                this.originalFile = result[board.fileId];
-                                                if(board.revision) {
-                                                    this.revisionFile = result[board.revision];
-                                                }
-                                                return this.originalFile;
-                                            })
-                                        )
-                                }),
-                                distinctUntilChanged(),
-                                map((file: any) => file.data),
-                                shareReplay(1),
-                            )
+                    const id = params.get('id');
+                    if (!id) {
+                        this.db
+                            .collection('boards')
+                            .add({
+                                data: ''
+                            })
+                            .then((doc) => {
+                                this.router.navigate(['flowchart/' + doc.id])
+                            })
+
                     }
                     else {
-                        this.data$ = of("");
+                        this.docId = params.get('id');
+
+                        this.data$ = this.db
+                            .doc('boards/' + this.docId)
+                            .valueChanges()
+                            .pipe(
+                                //take(1),
+                                distinctUntilChanged(),
+                                tap((board: any) => {
+                                    this.currentBoard = board;
+                                    //console.log(board);
+                                }),
+                                map((doc: any) => doc.data),
+                                //tap((data) => console.log(data)),
+                                shareReplay(1),
+                            );
                     }
                 })
             )
@@ -92,21 +89,19 @@ export class BoardComponent {
     }
 
     updateData(xml: string) {
-        // this.db
-        //     .doc('boards/' + this.docId)            
-        //     .set({ data: xml }, { merge: true })
+        this.db
+            .doc('boards/' + this.docId)
+            .set({ data: xml }, { merge: true })
     }
 
     openFile() {
         const modalRef = this.modalService.open(SaveDialogComponent, { size: 'lg', backdrop: 'static' });
         modalRef.componentInstance.contacts
-        modalRef.result.then((result) => {
-            this.getBoardByFileId(result.id)
-                .then(boardId => location.href = 'flowchart/' + boardId);
-        })
-        .catch((error) => {
-            //this.showToastError(error);
-        });
+        modalRef.result
+            .then((result: FileElement) => this.updateData(result.data))
+            .catch((error) => {
+                //this.showToastError(error);
+            });
     }
 
     shareFile() {
@@ -116,88 +111,46 @@ export class BoardComponent {
             .then(() => {
                 const modalRef = this.modalService.open(ShareDialogComponent, { size: 'lg', backdrop: 'static' });
                 modalRef.componentInstance.contacts = this.storeService.saved;
-                modalRef.result.then(async (result: { files: FileElement[], users: User[]}) => {
+                modalRef.result
+                    .then(async (result: { users: User[] }) => {
 
-                    let message = {
-                        text: '',
-                        timestamp: (new Date()).getTime(),
-                        sender: this.currentUserId,
-                    };
-                    for(let i =0; i < result.files.length; i++) {
-                        let boardId = await this.getBoardByFileId(result.files[i].id);
-                        message.text += location.origin + '/flowchart/' + boardId + "\n";
-                    }
-                    result.users.forEach(user => {
-                        let chats = this.storeService.chats
-                                        .filter(i => i.participants.includes(user.id))
-                                        .sort(this.storeService.sortByLastUpdate)
-                                        .slice(0,1);
-                        if(chats.length) {
-                            this.pubnub.publish(chats[0].channel, message);
-                        }
+                        let message = {
+                            text: '',
+                            timestamp: (new Date()).getTime(),
+                            sender: this.currentUserId,
+                        };
+
+                        message.text += location.origin + '/flowchart/' + this.docId;
+
+                        result.users.forEach(user => {
+                            let chats = this.storeService.chats
+                                .filter(i => i.participants.includes(user.id))
+                                .sort(this.storeService.sortByLastUpdate)
+                                .slice(0, 1);
+
+                            if (chats.length) {
+                                this.pubnub.publish(chats[0].channel, message);
+                            }
+                        });
+                        this.showToastAfterShare();
+                    })
+                    .catch((error) => {
+
                     });
-                    this.showToastAfterShare();
-                })
-                .catch((error) => {
-                });
             });
     }
 
     saveData(xml: string) {
 
-        if (this.boardId && this.currentUserId !== this.currentBoard.ownerId) {
-            let result;
-            if(!this.revisionFile) {
-                result = this.fileService.addRevision({ 
-                    isFolder: false, 
-                    name: `${this.currentBoard.fileName}_revision1`, 
-                    parent: this.originalFile.parent,
-                    data: xml
-                }, this.currentBoard.ownerId);
-            }
-            else {
-                result = this.fileService.update(this.revisionFile.id, { data: xml })
-            }
+        const modalRef = this.modalService.open(SaveDialogComponent, { size: 'lg', backdrop: 'static' });
+        modalRef.componentInstance.data = xml;
+        //modalRef.componentInstance.filename = this.filename;
 
-            let update = { ...this.currentBoard };
-            update.revision = result.fileId;
-
-            this.db
-                .doc('boards/' + this.boardId)
-                .set(update)
-                .then(() => this.showToastAfterSave(result.fileName));
-        }
-        else {
-            const modalRef = this.modalService.open(SaveDialogComponent, { size: 'lg', backdrop: 'static' });
-            modalRef.componentInstance.data = xml;
-            //modalRef.componentInstance.filename = this.filename;
-
-            modalRef.result.then((result) => {
-                if (!this.boardId || result.fileName !== this.originalFile.name) {
-                    this.db
-                        .collection('boards')
-                        .add(result)
-                        .then((doc) => {
-                            this.router.navigate(['flowchart/' + doc.id]);
-                            this.showToastAfterSave(result.fileName);
-                        })
-                }
-                else {
-                    this.db
-                        .doc('boards/' + this.boardId)
-                        .set(result)
-                        .then(() => {
-                            if(this.revisionFile) {
-                                this.fileService.delete(this.revisionFile.id);
-                            }
-                            this.showToastAfterSave(result.fileName)
-                        })
-                }
-
-            }).catch((error) => {
+        modalRef.result
+            .then((result) => this.showToastAfterSave(result.fileName))
+            .catch((error) => {
                 //this.showToastError(error);
             });
-        }
     }
 
     showToastAfterSave(filename: string) {
@@ -209,31 +162,31 @@ export class BoardComponent {
     }
 
     showToastError(message) {
-        if(message) {
+        if (message) {
             this.toastr.error(message);
         }
     }
 
     private getBoardByFileId(fileId): Promise<any> {
         return this.db.collection<any>('boards', ref => ref.where('fileId', '==', `${fileId}`).limit(1))
-                .get()
-                .toPromise()
-                .then(snapshot => {
-                    if (!snapshot.docs.length) {
-                        return this.db.collection<any>('boards', ref => ref.where('revision', '==', `${fileId}`).limit(1))
-                            .get()
-                            .toPromise()
-                            .then(snapshot2 => {
-                                if (snapshot2.docs.length) {
-                                    const board2 = snapshot2.docs[0];
-                                    return board2.id;
-                                }
-                            })
-                    }
-                    else {
-                        const board = snapshot.docs[0];
-                        return board.id;
-                    }
-                })
+            .get()
+            .toPromise()
+            .then(snapshot => {
+                if (!snapshot.docs.length) {
+                    return this.db.collection<any>('boards', ref => ref.where('revision', '==', `${fileId}`).limit(1))
+                        .get()
+                        .toPromise()
+                        .then(snapshot2 => {
+                            if (snapshot2.docs.length) {
+                                const board2 = snapshot2.docs[0];
+                                return board2.id;
+                            }
+                        })
+                }
+                else {
+                    const board = snapshot.docs[0];
+                    return board.id;
+                }
+            })
     }
 }

@@ -1,16 +1,6 @@
 <div class="modal-body">
-    <div style="height: 400px; box-sizing: border-box;">
-        <file-manager [fileElements]="fileElements | async" [path]="currentPath" [canNavigateUp]="canNavigateUp"
-            [selectedFiles]="selectedFiles" (folderAdded)="addFolder($event)" (elementRemoved)="removeElement($event)"
-            (navigatedDown)="navigateToFolder($event)" (navigatedUp)="navigateUp()"
-            (elementRenamed)="renameElement($event)" (elementMoved)="moveElement($event)"
-            (chooseFile)="chooseFile($event)"></file-manager>
-    </div>
-    <hr />
     <div class="contacts-container">
-        <div class="contacts-item" 
-            *ngFor="let user of contacts"
-            (click)="selectContact(user)"
+        <div class="contacts-item" *ngFor="let user of contacts" (click)="selectContact(user)"
             [ngClass]="{'selected': isContactSelected(user) }">
             <div class="contacts-icon">
                 <!-- <div class="user_status" [ngClass]="{ 'online': isOnline(user?.id) }">
@@ -25,7 +15,7 @@
 </div>
 <div class="modal-footer">
     <div>
-        <button [disabled]="!selectedFiles.length || !selectedUsers.length" (click)="share()">
+        <button [disabled]="!selectedUsers.length" (click)="share()">
             Share
         </button>
         &nbsp;

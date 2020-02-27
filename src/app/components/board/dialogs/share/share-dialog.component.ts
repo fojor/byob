@@ -16,11 +16,11 @@ import { PubnubService } from "src/app/chat/src/app/chat-container/pubnub.servic
 })
 export class ShareDialogComponent {
 
-    fileElements: Observable<FileElement[]>;
-    currentRoot: FileElement;
-    currentPath: string;
-    canNavigateUp = false;
-    selectedFiles: FileElement[] = [];
+    //fileElements: Observable<FileElement[]>;
+    //currentRoot: FileElement;
+    //currentPath: string;
+    //canNavigateUp = false;
+    //selectedFiles: FileElement[] = [];
     selectedUsers: User[] = [];
 
     @Input()
@@ -34,93 +34,93 @@ export class ShareDialogComponent {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private fileService: FileService,
-    ) { 
+        //private fileService: FileService,
+    ) {
 
     }
 
 
-    ngOnInit() {
-        this.fileService.load()
-            .subscribe(() => this.updateFileElementQuery());
-    }
+    // ngOnInit() {
+    //     this.fileService.load()
+    //         .subscribe(() => this.updateFileElementQuery());
+    // }
 
-    addFolder(folder: { name: string }) {
-        this.fileService.add({ 
-            isFolder: true, 
-            name: folder.name, 
-            parent: this.currentRoot ? this.currentRoot.id : 'root',
-            data: null
-        });
-        this.updateFileElementQuery();
-    }
+    // addFolder(folder: { name: string }) {
+    //     this.fileService.add({ 
+    //         isFolder: true, 
+    //         name: folder.name, 
+    //         parent: this.currentRoot ? this.currentRoot.id : 'root',
+    //         data: null
+    //     });
+    //     this.updateFileElementQuery();
+    // }
 
-    removeElement(element: FileElement) {
-        console.log(element);
+    // removeElement(element: FileElement) {
+    //     console.log(element);
 
-        this.fileService.delete(element.id);
-        this.updateFileElementQuery();
-    }
+    //     this.fileService.delete(element.id);
+    //     this.updateFileElementQuery();
+    // }
 
-    navigateToFolder(element: FileElement) {
-        this.currentRoot = element;
-        this.updateFileElementQuery();
-        this.currentPath = this.pushToPath(this.currentPath, element.name);
-        this.canNavigateUp = true;
-    }
+    // navigateToFolder(element: FileElement) {
+    //     this.currentRoot = element;
+    //     this.updateFileElementQuery();
+    //     this.currentPath = this.pushToPath(this.currentPath, element.name);
+    //     this.canNavigateUp = true;
+    // }
 
-    navigateUp() {
-        if (this.currentRoot && this.currentRoot.parent === 'root') {
-            this.currentRoot = null;
-            this.canNavigateUp = false;
-            this.updateFileElementQuery();
-        } else {
-            this.currentRoot = this.fileService.get(this.currentRoot.parent);
-            this.updateFileElementQuery();
-        }
-        this.currentPath = this.popFromPath(this.currentPath);
-    }
+    // navigateUp() {
+    //     if (this.currentRoot && this.currentRoot.parent === 'root') {
+    //         this.currentRoot = null;
+    //         this.canNavigateUp = false;
+    //         this.updateFileElementQuery();
+    //     } else {
+    //         this.currentRoot = this.fileService.get(this.currentRoot.parent);
+    //         this.updateFileElementQuery();
+    //     }
+    //     this.currentPath = this.popFromPath(this.currentPath);
+    // }
 
-    moveElement(event: { element: FileElement; moveTo: FileElement }) {
-        this.fileService.update(event.element.id, { parent: event.moveTo.id });
-        this.updateFileElementQuery();
-    }
+    // moveElement(event: { element: FileElement; moveTo: FileElement }) {
+    //     this.fileService.update(event.element.id, { parent: event.moveTo.id });
+    //     this.updateFileElementQuery();
+    // }
 
-    renameElement(element: FileElement) {
-        console.log(element);
-        this.fileService.update(element.id, { name: element.name });
-        this.updateFileElementQuery();
-    }
+    // renameElement(element: FileElement) {
+    //     console.log(element);
+    //     this.fileService.update(element.id, { name: element.name });
+    //     this.updateFileElementQuery();
+    // }
 
-    updateFileElementQuery() {
-        this.fileElements = this.fileService.queryInFolder(this.currentRoot ? this.currentRoot.id : 'root');
-    }
+    // updateFileElementQuery() {
+    //     this.fileElements = this.fileService.queryInFolder(this.currentRoot ? this.currentRoot.id : 'root');
+    // }
 
-    pushToPath(path: string, folderName: string) {
-        let p = path ? path : '';
-        p += `${folderName}/`;
-        return p;
-    }
+    // pushToPath(path: string, folderName: string) {
+    //     let p = path ? path : '';
+    //     p += `${folderName}/`;
+    //     return p;
+    // }
 
-    popFromPath(path: string) {
-        let p = path ? path : '';
-        let split = p.split('/');
-        split.splice(split.length - 2, 1);
-        p = split.join('/');
-        return p;
-    }
+    // popFromPath(path: string) {
+    //     let p = path ? path : '';
+    //     let split = p.split('/');
+    //     split.splice(split.length - 2, 1);
+    //     p = split.join('/');
+    //     return p;
+    // }
 
-    chooseFile(element: FileElement) {
-        if(this.selectedFiles.some(i => i.id === element.id)) {
-            this.selectedFiles = this.selectedFiles.filter(i => i.id !== element.id);
-        }
-        else {
-            this.selectedFiles.push(element);
-        }
-    }
+    // chooseFile(element: FileElement) {
+    //     if(this.selectedFiles.some(i => i.id === element.id)) {
+    //         this.selectedFiles = this.selectedFiles.filter(i => i.id !== element.id);
+    //     }
+    //     else {
+    //         this.selectedFiles.push(element);
+    //     }
+    // }
 
     selectContact(user: User) {
-        if(this.selectedUsers.some(i => i.id === user.id)) {
+        if (this.selectedUsers.some(i => i.id === user.id)) {
             this.selectedUsers = this.selectedUsers.filter(i => i.id !== user.id);
         }
         else {
@@ -133,10 +133,9 @@ export class ShareDialogComponent {
     }
 
     share() {
-        if(this.selectedFiles.length && this.selectedUsers.length) {
-           
+        if (this.selectedUsers.length) {
+
             this.activeModal.close({
-                files: this.selectedFiles,
                 users: this.selectedUsers
             });
         }
