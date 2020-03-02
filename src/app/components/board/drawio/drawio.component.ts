@@ -13,7 +13,7 @@ import { Component, ViewChild, ElementRef, OnInit, ViewEncapsulation, OnDestroy,
     encapsulation: ViewEncapsulation.None
 })
 export class DrawIOComponent implements OnDestroy {
-    private _url = 'drawio/index.html?embed=1&proto=json&configure=1&sb=0&vrs=8';
+    private _url = 'drawio/index.html?embed=1&proto=json&configure=1&sb=0&vrs=10';
     //'https://www.draw.io/?embed=1&spin=1&proto=json&configure=1';
     private _data: string;
 
@@ -161,7 +161,6 @@ export class DrawIOComponent implements OnDestroy {
         if (!this.isEqual(value, this._data)) {
             this._data = value;
             this.update.emit(value);
-            console.log('updated')
         }
     }
 
