@@ -14,6 +14,7 @@ import { StoreService } from 'src/app/chat/src/app/chat-container/store.service'
 import { FileElement } from 'src/app/file-manager';
 import { User } from 'src/app/shared';
 import { PubnubService } from 'src/app/chat/src/app/chat-container/pubnub.service';
+import MergeXML from 'mergexml';
 
 @Component({
     selector: 'blv-board',
@@ -30,6 +31,7 @@ export class BoardComponent {
     data$: Observable<string>;
     isDataLoaded: boolean = true;
     fileManagerVisible: boolean = false;
+    modefier = Math.random().toString(36).slice(2);
 
     constructor(
         private route: ActivatedRoute,
@@ -73,6 +75,7 @@ export class BoardComponent {
                             .valueChanges()
                             .pipe(
                                 //take(1),
+                                filter((doc: any) => doc.modefier !== this.modefier),
                                 distinctUntilChanged(),
                                 tap((board: any) => {
                                     this.currentBoard = board;
@@ -89,9 +92,32 @@ export class BoardComponent {
     }
 
     updateData(xml: string) {
-        this.db
-            .doc('boards/' + this.docId)
-            .set({ data: xml }, { merge: true })
+        //this.db.doc('boards/' + this.docId);
+        let docRef = this.db.firestore.doc('boards/' + this.docId);
+
+        this.db.firestore.runTransaction((transaction) => {
+            // This code may get re-run multiple times if there are conflicts.
+            return transaction.get(docRef).then((sfDoc) => {
+                if (!sfDoc.exists) {
+                    throw "Document does not exist!";
+                }
+
+                let data = xml;
+                let currentData = sfDoc.data().data;
+                if (currentData) {
+                    data = this.mergeXML(currentData, xml);
+                }
+
+                transaction.update(docRef, { data: data, modefier: this.modefier });
+            });
+        }).then(() => {
+            console.log("Transaction successfully committed!");
+        }).catch(error => {
+            docRef.set({ data: xml, modefier: this.modefier }, { merge: true })
+        });
+
+
+
     }
 
     openFile() {
@@ -165,6 +191,13 @@ export class BoardComponent {
         if (message) {
             this.toastr.error(message);
         }
+    }
+
+    private mergeXML(src1: string, src2: string) {
+        var oMX = new MergeXML();
+        oMX.AddSource(src1);
+        oMX.AddSource(src2);
+        return oMX.Get(1);
     }
 
     private getBoardByFileId(fileId): Promise<any> {

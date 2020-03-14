@@ -36,6 +36,7 @@
     "firebase": "^5.9.3",
     "html5shiv": "^3.7.3",
     "jquery": "^3.4.0",
+    "mergexml": "^1.2.1",
     "ngx-slick": "^0.2.1",
     "ngx-toastr": "^10.2.0",
     "popper.js": "^1.15.0",

@@ -141,16 +141,16 @@ EditorUi.prototype.init = function () {
     });
 
 
-    var svgElement = graph.container.querySelector('svg');
-    if (svgElement) {
-        mxEvent.addGestureListeners(svgElement, null, null, (e) => {
-            if (graph.freehand) {
-                graph.freehand.stopDrawing();
-                graph.freehand.startDrawing();
-                setTimeout(function () { graph.setSelectionCells([]); }, 15);
-            }
-        })
-    }
+    // var svgElement = graph.container.querySelector('svg');
+    // if (svgElement) {
+    //     mxEvent.addGestureListeners(svgElement, null, null, (e) => {
+    //         if (graph.freehand) {
+    //             graph.freehand.stopDrawing();
+    //             graph.freehand.startDrawing();
+    //             setTimeout(function () { graph.setSelectionCells([]); }, 15);
+    //         }
+    //     })
+    // }
 
 }
 
