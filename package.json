@@ -35,7 +35,7 @@
     "dropbox": "^4.0.17",
     "firebase": "^5.9.3",
     "html5shiv": "^3.7.3",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "mergexml": "^1.2.1",
     "ngx-slick": "^0.2.1",
     "ngx-toastr": "^10.2.0",
